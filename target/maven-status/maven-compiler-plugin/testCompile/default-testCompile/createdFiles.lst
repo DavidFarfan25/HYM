@@ -1,0 +1,7 @@
+com\proyecto\test\dao\ConexionBDTest.class
+com\proyecto\test\dao\ProductoDAOTest.class
+com\proyecto\test\controlador\InventarioControladorTest.class
+com\proyecto\test\dao\UsuarioDAOTest.class
+com\proyecto\test\controlador\LoginControladorTest.class
+com\proyecto\test\dao\DashboardDAOTest.class
+com\proyecto\test\controlador\DashboardControladorTest.class
