@@ -1,6 +1,7 @@
 Vista\inventario$9.class
 DAO\ConexionBD.class
 Vista\editar$2.class
+Vista\inventario$12.class
 Vista\inventario$2.class
 Vista\reporte$10.class
 Vista\dashboard.class
@@ -22,6 +23,7 @@ Vista\editar$5.class
 Vista\inventario$6.class
 Modelo\Producto.class
 Vista\reporte$7.class
+Vista\inventario$13.class
 Vista\dashboard$1.class
 Vista\reporte$12.class
 Vista\inventario$4.class

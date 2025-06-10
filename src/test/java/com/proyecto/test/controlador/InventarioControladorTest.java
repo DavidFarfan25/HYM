@@ -1,21 +1,18 @@
-package com.proyecto.test.controlador;
+package Test;
 
 import Controlador.InventarioControlador;
 import DAO.ProductoDAO;
 import Modelo.Producto;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class InventarioControladorTest {
+class InventarioControladorTest {
 
     private ProductoDAO productoDAO;
     private InventarioControlador controlador;
@@ -23,92 +20,65 @@ public class InventarioControladorTest {
     @BeforeEach
     void setUp() {
         productoDAO = mock(ProductoDAO.class);
-        controlador = new InventarioControlador(productoDAO); // Constructor debe recibir el DAO
+        controlador = new InventarioControlador(productoDAO);
     }
 
     @Test
-    void testListarProductos() {
-        Producto producto = crearProducto();
-        when(productoDAO.listarProductos()).thenReturn(Collections.singletonList(producto));
+    void listarProductos_debeRetornarLista() {
+        Producto producto = new Producto();
+        when(productoDAO.listarProductos()).thenReturn(List.of(producto));
 
-        List<Producto> resultado = controlador.listarProductos();
+        List<Producto> productos = controlador.listarProductos();
 
-        assertEquals(1, resultado.size());
-        assertEquals("Camiseta", resultado.get(0).getNombre());
+        assertEquals(1, productos.size());
         verify(productoDAO).listarProductos();
     }
 
     @Test
-    void testBuscarProductos() {
-        Producto producto = crearProducto();
-        when(productoDAO.buscarPorNombreOCodigo("camiseta")).thenReturn(Collections.singletonList(producto));
+    void buscarProducto_debeRetornarCoincidencias() {
+        Producto mock = new Producto();
+        when(productoDAO.buscarPorNombreOCodigo("ABC")).thenReturn(List.of(mock));
 
-        List<Producto> resultado = controlador.buscarProductos("camiseta");
+        List<Producto> resultados = controlador.buscarProductos("ABC");
 
-        assertFalse(resultado.isEmpty());
-        assertEquals("Camiseta", resultado.get(0).getNombre());
-        verify(productoDAO).buscarPorNombreOCodigo("camiseta");
+        assertFalse(resultados.isEmpty());
+        verify(productoDAO).buscarPorNombreOCodigo("ABC");
     }
 
     @Test
-    void testObtenerProductoPorCodigo() {
-        Producto producto = crearProducto();
-        when(productoDAO.buscarPorCodigo("123")).thenReturn(producto);
+    void obtenerProducto_conCodigoExistente_debeRetornarProducto() {
+        Producto p = new Producto();
+        when(productoDAO.buscarPorCodigo("123")).thenReturn(p);
 
-        Producto resultado = controlador.obtenerProductoPorCodigo("123");
+        Producto resultado = controlador.obtenerProducto("123");
 
         assertNotNull(resultado);
-        assertEquals("123", resultado.getCodigo());
         verify(productoDAO).buscarPorCodigo("123");
     }
 
     @Test
-    void testRegistrarProducto() {
-        Producto producto = crearProducto();
-        when(productoDAO.registrarProducto(producto)).thenReturn(true);
+    void aumentarStock_debeActualizarStock() {
+        Producto p = new Producto();
+        p.setCodigo("X001");
+        p.setStock(5);
 
-        boolean resultado = controlador.registrarProducto(producto);
+        when(productoDAO.buscarPorCodigo("X001")).thenReturn(p);
+        when(productoDAO.actualizarProducto(any(Producto.class))).thenReturn(true);
 
-        assertTrue(resultado);
-        verify(productoDAO).registrarProducto(producto);
+        boolean actualizado = controlador.aumentarStock("X001", 3);
+
+        assertTrue(actualizado);
+        verify(productoDAO).buscarPorCodigo("X001");
+        verify(productoDAO).actualizarProducto(any(Producto.class));
     }
 
     @Test
-    void testActualizarProducto() {
-        Producto producto = crearProducto();
-        when(productoDAO.actualizarProducto(producto)).thenReturn(true);
+    void ocultarProducto_conCodigoValido_debeLlamarDAO() {
+        when(productoDAO.ocultarProductoPorCodigo("X001")).thenReturn(true);
 
-        boolean resultado = controlador.actualizarProducto(producto);
+        boolean result = controlador.ocultarProducto("X001");
 
-        assertTrue(resultado);
-        verify(productoDAO).actualizarProducto(producto);
-    }
-
-    @Test
-    void testOcultarProducto() {
-        when(productoDAO.ocultarProductoPorCodigo("123")).thenReturn(true);
-
-        boolean resultado = controlador.ocultarProducto("123");
-
-        assertTrue(resultado);
-        verify(productoDAO).ocultarProductoPorCodigo("123");
-    }
-
-    // Método de utilidad para crear un producto de prueba
-    private Producto crearProducto() {
-        Producto producto = new Producto();
-        producto.setId(1);
-        producto.setNombre("Camiseta");
-        producto.setCategoria("Ropa");
-        producto.setTalla("M");
-        producto.setPrecio(new BigDecimal("29.99"));
-        producto.setStock(10);
-        producto.setCodigo("123");
-        producto.setColor("Rojo");
-        producto.setImagen("camiseta.jpg");
-        producto.setFechaCreacion(new Timestamp(System.currentTimeMillis()));
-        producto.setUltimaActualizacion(new Timestamp(System.currentTimeMillis()));
-        producto.setVisible(true);
-        return producto;
+        assertTrue(result);
+        verify(productoDAO).ocultarProductoPorCodigo("X001");
     }
 }

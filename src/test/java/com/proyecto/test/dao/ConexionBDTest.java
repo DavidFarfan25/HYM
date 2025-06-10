@@ -12,19 +12,18 @@ public class ConexionBDTest {
 
     @BeforeEach
     void setUp() {
-        // Aseguramos que la conexión esté cerrada antes de cada test
         ConexionBD.cerrarConexion();
     }
 
     @AfterEach
     void tearDown() {
-        // Cerrar conexión después de cada test
         ConexionBD.cerrarConexion();
     }
 
     @Test
     void testObtenerConexionExitosa() throws SQLException {
         Connection conn = ConexionBD.obtenerConexion();
+
         assertNotNull(conn, "La conexión no debe ser null");
         assertFalse(conn.isClosed(), "La conexión debe estar abierta");
     }
@@ -41,12 +40,12 @@ public class ConexionBDTest {
     void testCerrarConexion() throws SQLException {
         Connection conn = ConexionBD.obtenerConexion();
         ConexionBD.cerrarConexion();
+
         assertTrue(conn.isClosed(), "La conexión debe estar cerrada después de cerrarConexion()");
     }
 
     @Test
     void testCerrarConexionSinConexionAbierta() {
-        // No debe lanzar excepción si no hay conexión abierta
-        assertDoesNotThrow(() -> ConexionBD.cerrarConexion());
+        assertDoesNotThrow(ConexionBD::cerrarConexion, "No debe lanzar excepción si no hay conexión activa");
     }
 }

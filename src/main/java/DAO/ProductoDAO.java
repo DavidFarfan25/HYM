@@ -1,19 +1,187 @@
 package DAO;
 
+import Modelo.Producto;
 import com.google.common.base.Preconditions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import Modelo.Producto;
 
 public class ProductoDAO {
 
-    public boolean registrarProducto(Producto producto) {
-        String sql = "INSERT INTO Producto (nombre, categoria, talla, precio, stock, codigo, color, imagen, fecha_creacion, ultima_actualizacion) " +
-                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, GETDATE(), GETDATE())";
+    private static final Logger logger = LoggerFactory.getLogger(ProductoDAO.class);
+
+    // Lista todos los productos visibles
+    public List<Producto> listarProductos() {
+        logger.info("Consultando todos los productos visibles");
+        List<Producto> productos = new ArrayList<>();
+
+        String sql = "SELECT * FROM Producto WHERE visible = 1 ORDER BY nombre";
+
+        try (Connection conn = ConexionBD.obtenerConexion();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                productos.add(mapearProducto(rs));
+            }
+
+        } catch (SQLException e) {
+            logger.error("Error al listar productos: {}", e.getMessage(), e);
+        }
+
+        return productos;
+    }
+
+    // Búsqueda por nombre o código
+    public List<Producto> buscarPorNombreOCodigo(String termino) {
+        Preconditions.checkNotNull(termino, "El término de búsqueda no puede ser null");
+
+        logger.info("Buscando productos por término: '{}'", termino);
+        List<Producto> productos = new ArrayList<>();
+
+        String sql = "SELECT * FROM Producto WHERE nombre LIKE ? OR codigo LIKE ? ORDER BY nombre";
+
         try (Connection conn = ConexionBD.obtenerConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            
+
+            String likeTerm = "%" + termino + "%";
+            stmt.setString(1, likeTerm);
+            stmt.setString(2, likeTerm);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    productos.add(mapearProducto(rs));
+                }
+            }
+
+        } catch (SQLException e) {
+            logger.error("Error al buscar productos: {}", e.getMessage(), e);
+        }
+
+        return productos;
+    }
+
+    // Buscar producto por código
+    public Producto buscarPorCodigo(String codigo) {
+        Preconditions.checkNotNull(codigo, "El código no puede ser null");
+
+        logger.info("Buscando producto con código: '{}'", codigo);
+        String sql = "SELECT * FROM Producto WHERE codigo = ?";
+
+        try (Connection conn = ConexionBD.obtenerConexion();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, codigo);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return mapearProducto(rs);
+                }
+            }
+
+        } catch (SQLException e) {
+            logger.error("Error al buscar producto por código '{}': {}", codigo, e);
+        }
+
+        return null;
+    }
+
+    // Obtener solo info básica del producto
+    public Producto obtenerInfoProducto(String codigo) {
+        Preconditions.checkNotNull(codigo, "El código no puede ser null");
+
+        logger.info("Obteniendo información básica del producto con código: '{}'", codigo);
+        String sql = "SELECT codigo, nombre, precio, talla FROM Producto WHERE codigo = ? AND visible = 1";
+
+        try (Connection conn = ConexionBD.obtenerConexion();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, codigo);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    Producto producto = new Producto();
+                    producto.setCodigo(rs.getString("codigo"));
+                    producto.setNombre(rs.getString("nombre"));
+                    producto.setTalla(rs.getString("talla"));
+                    producto.setPrecio(rs.getBigDecimal("precio"));
+                    return producto;
+                }
+            }
+
+        } catch (SQLException e) {
+            logger.error("Error al obtener info básica del producto '{}': {}", codigo, e);
+        }
+
+        return null;
+    }
+
+    // Ocultar un producto
+    public boolean ocultarProductoPorCodigo(String codigo) {
+        Preconditions.checkNotNull(codigo, "El código no puede ser null");
+
+        logger.info("Marcando como no visible el producto con código: '{}'", codigo);
+        String sql = "UPDATE Producto SET visible = 0, ultima_actualizacion = GETDATE() WHERE codigo = ?";
+
+        try (Connection conn = ConexionBD.obtenerConexion();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, codigo);
+            return stmt.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            logger.error("Error al ocultar producto con código '{}': {}", codigo, e);
+        }
+
+        return false;
+    }
+
+    // Actualiza un producto completo
+    public boolean actualizarProducto(Producto producto) {
+        Preconditions.checkNotNull(producto, "El producto no puede ser null");
+        Preconditions.checkNotNull(producto.getCodigo(), "El código del producto no puede ser null");
+
+        logger.info("Actualizando producto con código: '{}'", producto.getCodigo());
+
+            String sql = "UPDATE Producto SET " +
+             "nombre = ?, categoria = ?, talla = ?, precio = ?, stock = ?, color = ?, imagen = ?, " +
+             "visible = ?, ultima_actualizacion = GETDATE() " +
+             "WHERE codigo = ?";
+
+        try (Connection conn = ConexionBD.obtenerConexion();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, producto.getNombre());
+            stmt.setString(2, producto.getCategoria());
+            stmt.setString(3, producto.getTalla());
+            stmt.setBigDecimal(4, producto.getPrecio());
+            stmt.setInt(5, producto.getStock());
+            stmt.setString(6, producto.getColor());
+            stmt.setString(7, producto.getImagen());
+            stmt.setInt(8, producto.isVisible() ? 1 : 0);
+            stmt.setString(9, producto.getCodigo());
+
+            return stmt.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            logger.error("Error al actualizar producto '{}': {}", producto.getCodigo(), e);
+        }
+
+        return false;
+    }
+
+    // Inserta un nuevo producto
+    public boolean registrarProducto(Producto producto) {
+        String sql = "INSERT INTO Producto (nombre, categoria, talla, precio, stock, codigo, color, imagen, " +
+             "fecha_creacion, ultima_actualizacion, visible) " +
+             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, GETDATE(), GETDATE(), 1)";
+
+        try (Connection conn = ConexionBD.obtenerConexion();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setString(1, producto.getNombre());
             stmt.setString(2, producto.getCategoria());
             stmt.setString(3, producto.getTalla());
@@ -22,171 +190,33 @@ public class ProductoDAO {
             stmt.setString(6, producto.getCodigo());
             stmt.setString(7, producto.getColor());
             stmt.setString(8, producto.getImagen());
+
             return stmt.executeUpdate() > 0;
-        } catch (SQLException e) {
-            System.err.println("Error al registrar producto: " + e.getMessage());
-            return false;
-        }
-    }
-
-    public boolean actualizarProducto(Producto producto) {
-        String sql = "UPDATE Producto SET nombre = ?, categoria = ?, talla = ?, precio = ?, stock = ?, codigo = ?, color = ?, imagen = ?, visible = ?, ultima_actualizacion = GETDATE() WHERE id = ?";
-    
-    try (Connection conn = ConexionBD.obtenerConexion();
-         PreparedStatement stmt = conn.prepareStatement(sql)) {
-        stmt.setString(1, producto.getNombre());
-        stmt.setString(2, producto.getCategoria());
-        stmt.setString(3, producto.getTalla());
-        stmt.setBigDecimal(4, producto.getPrecio());
-        stmt.setInt(5, producto.getStock());
-        stmt.setString(6, producto.getCodigo());
-        stmt.setString(7, producto.getColor());
-        stmt.setString(8, producto.getImagen());
-        stmt.setBoolean(9, producto.isVisible());
-        stmt.setInt(10, producto.getId()); 
-        int filas = stmt.executeUpdate();
-        return filas > 0;
-
-    } catch (SQLException e) {
-        System.err.println("Error al actualizar producto: " + e.getMessage());
-        e.printStackTrace();
-        return false;
-    }
-}
-
-   public List<Producto> listarProductos() {
-    List<Producto> productos = new ArrayList<>();
-    String sql = "SELECT * FROM Producto WHERE visible = 1";
-    
-    try (Connection conn = ConexionBD.obtenerConexion();
-         PreparedStatement stmt = conn.prepareStatement(sql);
-         ResultSet rs = stmt.executeQuery()) {
-
-        while (rs.next()) {
-            Producto p = new Producto();
-            p.setId(rs.getInt("id"));
-            p.setNombre(rs.getString("nombre"));
-            p.setCategoria(rs.getString("categoria"));
-            p.setTalla(rs.getString("talla"));
-            p.setPrecio(rs.getBigDecimal("precio"));
-            p.setStock(rs.getInt("stock"));
-            p.setCodigo(rs.getString("codigo"));
-            p.setColor(rs.getString("color"));
-            p.setImagen(rs.getString("imagen"));
-            p.setFechaCreacion(rs.getTimestamp("fecha_creacion"));
-            p.setUltimaActualizacion(rs.getTimestamp("ultima_actualizacion"));
-            p.setVisible(rs.getBoolean("visible"));
-            productos.add(p);
-        }
-    } catch (SQLException e) {
-        System.err.println("Error al listar todos los productos: " + e.getMessage());
-    }
-    return productos;
-}
-    
-    public Producto obtenerInfoProducto(String codigo) {
-    String sql = "SELECT nombre, categoria, precio, talla FROM Producto WHERE codigo = ?";
-    try (   Connection conn = ConexionBD.obtenerConexion();
-            PreparedStatement stmt = conn.prepareStatement(sql)) {
-        stmt.setString(1, codigo);
-        ResultSet rs = stmt.executeQuery();
-        if (rs.next()) {
-            Producto p = new Producto();
-            p.setCodigo(codigo);
-            p.setNombre(rs.getString("nombre"));
-            p.setTalla(rs.getString("talla"));
-            p.setCategoria(rs.getString("categoria"));
-            p.setPrecio(rs.getBigDecimal("precio"));
-            return p;
-        }
-    } catch (SQLException e) {
-        System.err.println("Error al buscar producto: " + e.getMessage());
-    }
-    return null;
-}
-
-    
-    public List<Producto> buscarPorNombreOCodigo(String texto) {
-    List<Producto> productos = new ArrayList<>();
-    String sql = "SELECT * FROM Producto WHERE nombre LIKE ? OR codigo LIKE ?";
-
-    try (Connection conn = ConexionBD.obtenerConexion();
-         PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-        String parametro = "%" + texto + "%";
-        stmt.setString(1, parametro);
-        stmt.setString(2, parametro);
-
-        try (ResultSet rs = stmt.executeQuery()) {
-            while (rs.next()) {
-                Producto p = new Producto();
-                p.setId(rs.getInt("id"));
-                p.setNombre(rs.getString("nombre"));
-                p.setCategoria(rs.getString("categoria"));
-                p.setTalla(rs.getString("talla"));
-                p.setPrecio(rs.getBigDecimal("precio"));
-                p.setStock(rs.getInt("stock"));
-                p.setCodigo(rs.getString("codigo"));
-                p.setColor(rs.getString("color"));
-                p.setImagen(rs.getString("imagen"));
-                p.setFechaCreacion(rs.getTimestamp("fecha_creacion"));
-                p.setUltimaActualizacion(rs.getTimestamp("ultima_actualizacion"));
-                p.setVisible(rs.getBoolean("visible")); // ¡IMPORTANTE!
-
-                productos.add(p);
-            }
-        }
-
-    } catch (SQLException e) {
-        System.err.println("Error al buscar producto: " + e.getMessage());
-    }
-
-    return productos;
-}
-    
-    public Producto buscarPorCodigo(String codigo) {
-        Preconditions.checkNotNull(codigo, "El ID no puede ser nulo");
-
-        String sql = "SELECT * FROM Producto WHERE codigo = ?";
-        try (Connection conn = ConexionBD.obtenerConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            
-            stmt.setString(1, codigo);
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                Producto p = new Producto();
-                p.setId(rs.getInt("id"));
-                p.setNombre(rs.getString("nombre"));
-                p.setCategoria(rs.getString("categoria"));
-                p.setTalla(rs.getString("talla"));
-                p.setPrecio(rs.getBigDecimal("precio"));
-                p.setStock(rs.getInt("stock"));
-                p.setCodigo(rs.getString("codigo"));
-                p.setColor(rs.getString("color"));
-                p.setImagen(rs.getString("imagen"));
-                p.setFechaCreacion(rs.getTimestamp("fecha_creacion"));
-                p.setUltimaActualizacion(rs.getTimestamp("ultima_actualizacion"));
-                return p;
-            }
 
         } catch (SQLException e) {
-            System.err.println("Error al buscar producto: " + e.getMessage());
+            logger.error("Error al registrar producto '{}': {}", producto.getCodigo(), e);
         }
-        return null;
-    }
-    
-    public boolean ocultarProductoPorCodigo(String codigo) {
-    String sql = "UPDATE Producto SET visible = 0, ultima_actualizacion = GETDATE() WHERE codigo = ?";
-    try (Connection conn = ConexionBD.obtenerConexion();
-         PreparedStatement stmt = conn.prepareStatement(sql)) {
-        
-        stmt.setString(1, codigo);
-        return stmt.executeUpdate() > 0;
 
-    } catch (SQLException e) {
-        System.err.println("Error al ocultar producto: " + e.getMessage());
         return false;
     }
-}
+
+    // Mapea un producto desde un ResultSet
+    private Producto mapearProducto(ResultSet rs) throws SQLException {
+        Producto producto = new Producto();
+
+        producto.setId(rs.getInt("id"));
+        producto.setCodigo(rs.getString("codigo"));
+        producto.setNombre(rs.getString("nombre"));
+        producto.setCategoria(rs.getString("categoria"));
+        producto.setTalla(rs.getString("talla"));
+        producto.setPrecio(rs.getBigDecimal("precio"));
+        producto.setStock(rs.getInt("stock"));
+        producto.setColor(rs.getString("color"));
+        producto.setImagen(rs.getString("imagen"));
+        producto.setVisible(rs.getBoolean("visible"));
+        producto.setFechaCreacion(rs.getTimestamp("fecha_creacion"));
+        producto.setUltimaActualizacion(rs.getTimestamp("ultima_actualizacion"));
+
+        return producto;
+    }
 }

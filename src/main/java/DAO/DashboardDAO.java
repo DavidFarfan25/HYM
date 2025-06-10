@@ -1,12 +1,17 @@
 package DAO;
 
+import Modelo.DashboardResumen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import Modelo.DashboardResumen;
+
 import java.sql.*;
 import java.util.*;
 
+/**
+ * DAO responsable de consultar los datos estadísticos para el dashboard principal.
+ */
 public class DashboardDAO {
+
     private static final Logger logger = LoggerFactory.getLogger(DashboardDAO.class);
     private final Connection conexion;
 
@@ -14,89 +19,160 @@ public class DashboardDAO {
         this.conexion = conexion;
     }
 
+    /**
+     * Verifica si la conexión es válida antes de usarla.
+     */
+    private void verificarConexion() throws SQLException {
+        if (conexion == null || conexion.isClosed()) {
+            throw new SQLException("La conexión está cerrada o no disponible.");
+        }
+    }
+
+    /**
+     * Genera un resumen completo de estadísticas para el dashboard.
+     */
     public DashboardResumen obtenerResumenDashboard() {
         logger.info("Inicio de obtención de resumen del dashboard");
+
         DashboardResumen resumen = new DashboardResumen();
-        
-        resumen.setProductosEnStock(contarProductosPorStock("> 10"));
-        resumen.setProductosBajoStock(contarProductosPorStock("BETWEEN 1 AND 10"));
-        resumen.setProductosSinStock(contarProductosPorStock("= 0"));
-        resumen.setProductosMasVendidos(obtenerProductosMasVendidos());
-        resumen.setUltimosIngresos(obtenerUltimosIngresos());
-        resumen.setEstadoSistema("Todos los módulos trabajando correctamente");
-        
-        logger.info("Resumen obtenido: {}", resumen);
+        try {
+            verificarConexion();
+            resumen.setProductosEnStock(contarProductosPorStock("> 50"));
+            resumen.setProductosBajoStock(contarProductosPorStock("BETWEEN 1 AND 49"));
+            resumen.setProductosSinStock(contarProductosPorStock("= 0"));
+            resumen.setProductosMasVendidos(obtenerProductosMasVendidos());
+            resumen.setUltimosIngresos(obtenerUltimosIngresos());
+            resumen.setEstadoSistema(obtenerEstadoSistema());
+
+            logger.info("Resumen obtenido: {}", resumen);
+        } catch (SQLException e) {
+            logger.error("Error al obtener el resumen del dashboard", e);
+        }
+
         return resumen;
     }
 
+    /**
+     * Cuenta productos según una condición de stock.
+     */
     public int contarProductosPorStock(String condicion) {
-        int cantidad = 0;
         String sql = "SELECT COUNT(*) FROM Producto WHERE stock " + condicion;
-
-        try (Statement stmt = conexion.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-            if (rs.next()) {
-                cantidad = rs.getInt(1);
+        try {
+            verificarConexion();
+            try (Statement stmt = conexion.createStatement();
+                 ResultSet rs = stmt.executeQuery(sql)) {
+                return rs.next() ? rs.getInt(1) : 0;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Error al contar productos por condición '{}': {}", condicion, e.getMessage());
+            return 0;
         }
-        return cantidad;
     }
 
+    /**
+     * Devuelve una lista de los 3 productos más vendidos.
+     */
     public List<String> obtenerProductosMasVendidos() {
         List<String> lista = new ArrayList<>();
 
-        String sql = 
-    "SELECT p.nombre, SUM(m.cantidad) as total_ventas " +
-    "FROM Movimiento m " +
-    "JOIN Producto p ON m.producto_id = p.id " +
-    "WHERE m.tipo = 'egreso' " +
-    "GROUP BY p.nombre " +
-    "ORDER BY total_ventas DESC " +
-    "OFFSET 0 ROWS FETCH NEXT 3 ROWS ONLY";
+        String sql =
+            "SELECT p.nombre, SUM(m.cantidad) as total_ventas " +
+            "FROM Movimiento m " +
+            "JOIN Producto p ON m.producto_id = p.id " +
+            "WHERE m.tipo = 'egreso' " +
+            "GROUP BY p.nombre " +
+            "ORDER BY total_ventas DESC " +
+            "OFFSET 0 ROWS FETCH NEXT 3 ROWS ONLY";
 
-
-        try (Statement stmt = conexion.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-
-            while (rs.next()) {
-                String nombre = rs.getString("nombre");
-                int ventas = rs.getInt("total_ventas");
-                lista.add(nombre + " - " + ventas + " ventas");
+        try {
+            verificarConexion();
+            try (Statement stmt = conexion.createStatement();
+                 ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    String nombre = rs.getString("nombre");
+                    int ventas = rs.getInt("total_ventas");
+                    lista.add(String.format("%s<html><br> (%d ventas)</html>", nombre, ventas));
+                }
             }
-
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Error al obtener productos más vendidos: {}", e.getMessage());
         }
 
         return lista;
     }
 
+    /**
+     * Devuelve los últimos 3 ingresos al inventario.
+     */
     public List<String> obtenerUltimosIngresos() {
         List<String> lista = new ArrayList<>();
 
-        String sql = 
-    "SELECT TOP 3 p.nombre, m.cantidad " +
-    "FROM Movimiento m " +
-    "JOIN Producto p ON m.producto_id = p.id " +
-    "WHERE m.tipo = 'ingreso' " +
-    "ORDER BY m.fecha DESC";
+        String sql =
+            "SELECT TOP 3 p.nombre, m.cantidad " +
+            "FROM Movimiento m " +
+            "JOIN Producto p ON m.producto_id = p.id " +
+            "WHERE m.tipo = 'ingreso' " +
+            "ORDER BY m.fecha DESC";
 
-
-        try (Statement stmt = conexion.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-
-            while (rs.next()) {
-                String nombre = rs.getString("nombre");
-                int cantidad = rs.getInt("cantidad");
-                lista.add(nombre + " - " + cantidad + " unidades");
+        try {
+            verificarConexion();
+            try (Statement stmt = conexion.createStatement();
+                 ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    String nombre = rs.getString("nombre");
+                    int cantidad = rs.getInt("cantidad");
+                    lista.add(String.format("%s<html><br> (%d unidades)</html>", nombre, cantidad));
+                }
             }
-
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Error al obtener últimos ingresos: {}", e.getMessage());
         }
 
         return lista;
+    }
+
+    /**
+     * Evalúa el estado del sistema según la tabla EstadoSistema.
+     */
+    public String obtenerEstadoSistema() {
+        String sql = "SELECT estado FROM EstadoSistema";
+        boolean hayWarn = false, hayError = false, hayCritico = false;
+
+        try {
+            verificarConexion();
+            try (Statement stmt = conexion.createStatement();
+                 ResultSet rs = stmt.executeQuery(sql)) {
+
+                while (rs.next()) {
+                    String estado = rs.getString("estado").toUpperCase();
+
+                    switch (estado) {
+                        case "CRITICAL":
+                            hayCritico = true;
+                            break;
+                        case "ERROR":
+                            hayError = true;
+                            break;
+                        case "WARN":
+                            hayWarn = true;
+                            break;
+                        case "OK":
+                            break;
+                        default:
+                            logger.warn("Estado desconocido detectado: {}", estado);
+                            break;
+                    }
+                }
+            }
+
+            if (hayCritico) return "Sistema inestable - Revisar urgentemente";
+            if (hayError) return "Error en sincronización de datos";
+            if (hayWarn) return "Sistema funcionando con advertencias menores";
+            return "Todos los módulos funcionando correctamente";
+
+        } catch (SQLException e) {
+            logger.error("Error al evaluar el estado del sistema", e);
+            return "No se pudo determinar el estado del sistema";
+        }
     }
 }

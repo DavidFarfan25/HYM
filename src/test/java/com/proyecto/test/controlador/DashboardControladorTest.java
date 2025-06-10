@@ -3,6 +3,7 @@ package com.proyecto.test.controlador;
 import Controlador.DashboardControlador;
 import DAO.DashboardDAO;
 import Modelo.DashboardResumen;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -15,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class DashboardControladorTest {
 
     @Mock
-    private DashboardDAO dashboardDAO; 
+    private DashboardDAO dashboardDAO;
 
     @InjectMocks
     private DashboardControlador controlador;
@@ -29,6 +30,7 @@ public class DashboardControladorTest {
     void testObtenerResumen() {
         DashboardResumen resumenMock = new DashboardResumen();
         resumenMock.setEstadoSistema("OK");
+
         when(dashboardDAO.obtenerResumenDashboard()).thenReturn(resumenMock);
 
         DashboardResumen resultado = controlador.obtenerResumen();

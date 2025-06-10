@@ -1,12 +1,14 @@
 package com.proyecto.test.dao;
 
 import DAO.UsuarioDAO;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UsuarioDAOTest {
+
     private UsuarioDAO dao;
 
     @BeforeEach

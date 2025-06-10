@@ -1,15 +1,25 @@
 package Modelo;
+
 import java.util.List;
 
+/**
+ * Clase que representa un resumen de datos para el dashboard principal.
+ */
 public class DashboardResumen {
+
+    // === Atributos ===
     private int productosEnStock;
     private int productosBajoStock;
     private int productosSinStock;
+
     private List<String> productosMasVendidos;
     private List<String> ultimosIngresos;
+
     private String estadoSistema;
 
-       public int getProductosEnStock() {
+    // === Getters y Setters ===
+
+    public int getProductosEnStock() {
         return productosEnStock;
     }
 
@@ -56,6 +66,4 @@ public class DashboardResumen {
     public void setEstadoSistema(String estadoSistema) {
         this.estadoSistema = estadoSistema;
     }
-
-    
 }
