@@ -16,7 +16,6 @@ public class dashboard extends javax.swing.JFrame {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.controlador = new DashboardControlador();
-
         cargarDatosDashboard();
         iniciarActualizacionAutomatica();
     }
@@ -49,7 +48,7 @@ public class dashboard extends javax.swing.JFrame {
     }
 
      private void iniciarActualizacionAutomatica() {
-        refrescoTimer = new Timer(20000, (ActionEvent e) -> cargarDatosDashboard());
+        refrescoTimer = new Timer(5000, (ActionEvent e) -> cargarDatosDashboard());
         refrescoTimer.start();
     }
     @SuppressWarnings("unchecked")

@@ -171,9 +171,10 @@ public class InventarioControlador {
 
     
     public void detenerSimuladorDeStock() {
-        if (simuladorTimer != null) {
-            simuladorTimer.stop();
-            logger.info("Simulador detenido.");
-        }
+    if (simuladorTimer != null) {
+        simuladorTimer.stop();
+        simuladorTimer = null;
+        logger.info("Simulador detenido.");
     }
+}
 }
