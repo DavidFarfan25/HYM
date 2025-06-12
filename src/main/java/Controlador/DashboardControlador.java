@@ -9,16 +9,13 @@ import org.slf4j.LoggerFactory;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-/**
- * Controlador para manejar la lógica del panel de Dashboard.
- */
+
+
 public class DashboardControlador {
 
     private static final Logger logger = LoggerFactory.getLogger(DashboardControlador.class);
 
-    /**
-     * Obtiene el resumen actual del sistema para mostrar en el Dashboard.
-     */
+
     public DashboardResumen obtenerResumen() {
         try (Connection conexion = ConexionBD.obtenerConexion()) {
             DashboardDAO dashboardDAO = new DashboardDAO(conexion);

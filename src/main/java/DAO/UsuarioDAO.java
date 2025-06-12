@@ -7,20 +7,11 @@ import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 
-/**
- * DAO encargado de las operaciones relacionadas al usuario (login).
- */
 public class UsuarioDAO {
 
     private static final Logger logger = LoggerFactory.getLogger(UsuarioDAO.class);
 
-    /**
-     * Valida las credenciales de acceso de un usuario.
-     *
-     * @param username Nombre de usuario.
-     * @param password Contraseña del usuario.
-     * @return true si las credenciales son válidas, false en caso contrario.
-     */
+
     public boolean validarCredenciales(String username, String password) {
         Preconditions.checkArgument(!Strings.isNullOrEmpty(username), "El nombre de usuario no puede estar vacío");
         Preconditions.checkArgument(!Strings.isNullOrEmpty(password), "La contraseña no puede estar vacía");

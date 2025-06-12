@@ -11,9 +11,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
-/**
- * Controlador principal para la gestión del inventario.
- */
+
 public class InventarioControlador {
 
     private static final Logger logger = LoggerFactory.getLogger(InventarioControlador.class);
@@ -24,7 +22,7 @@ public class InventarioControlador {
         this.productoDAO = new ProductoDAO();
     }
 
-    // Para pruebas unitarias con DAO simulado
+    
     public InventarioControlador(ProductoDAO productoDAO) {
         this.productoDAO = productoDAO;
     }
@@ -101,9 +99,7 @@ public class InventarioControlador {
         return productoDAO.actualizarProducto(producto);
     }
 
-    /**
-     * Inicia el simulador automático de reducción de stock.
-     */
+
     public void iniciarSimuladorDeStock() {
         if (simuladorTimer != null && simuladorTimer.isRunning()) {
             logger.info("El simulador ya está en ejecución.");

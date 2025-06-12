@@ -6,7 +6,7 @@ import Modelo.Producto;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
-import javax.swing.table.DefaultTableCellRenderer;
+
 
 /**
  * Vista principal para la gestión del inventario de productos.
@@ -20,7 +20,7 @@ public final class inventario extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         actualizarTablaCompleta();
-    }
+         }
 
     /**
      * Consulta y carga todos los productos visibles en la tabla.
@@ -36,8 +36,8 @@ public final class inventario extends javax.swing.JFrame {
     }
 
     /**
-     * Llena la tabla con una lista de productos.
-     * Si un producto está inhabilitado, se marca visualmente en su código.
+     * Llena la tabla con una lista de productos.Si un producto está inhabilitado, se marca visualmente en su código.
+     * @param lista
      */
     public void cargarTabla(List<Producto> lista) {
         DefaultTableModel modelo = (DefaultTableModel) tablaInventario.getModel();

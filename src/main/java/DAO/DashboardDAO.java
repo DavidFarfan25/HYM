@@ -7,9 +7,7 @@ import org.slf4j.LoggerFactory;
 import java.sql.*;
 import java.util.*;
 
-/**
- * DAO responsable de consultar los datos estadísticos para el dashboard principal.
- */
+
 public class DashboardDAO {
 
     private static final Logger logger = LoggerFactory.getLogger(DashboardDAO.class);
@@ -19,18 +17,14 @@ public class DashboardDAO {
         this.conexion = conexion;
     }
 
-    /**
-     * Verifica si la conexión es válida antes de usarla.
-     */
+
     private void verificarConexion() throws SQLException {
         if (conexion == null || conexion.isClosed()) {
             throw new SQLException("La conexión está cerrada o no disponible.");
         }
     }
 
-    /**
-     * Genera un resumen completo de estadísticas para el dashboard.
-     */
+
     public DashboardResumen obtenerResumenDashboard() {
         logger.info("Inicio de obtención de resumen del dashboard");
 
@@ -52,9 +46,7 @@ public class DashboardDAO {
         return resumen;
     }
 
-    /**
-     * Cuenta productos según una condición de stock.
-     */
+
     public int contarProductosPorStock(String condicion) {
         String sql = "SELECT COUNT(*) FROM Producto WHERE stock " + condicion;
         try {
@@ -69,9 +61,7 @@ public class DashboardDAO {
         }
     }
 
-    /**
-     * Devuelve una lista de los 3 productos más vendidos.
-     */
+
     public List<String> obtenerProductosMasVendidos() {
         List<String> lista = new ArrayList<>();
 
@@ -101,9 +91,7 @@ public class DashboardDAO {
         return lista;
     }
 
-    /**
-     * Devuelve los últimos 3 ingresos al inventario.
-     */
+
     public List<String> obtenerUltimosIngresos() {
         List<String> lista = new ArrayList<>();
 
@@ -135,7 +123,7 @@ public class DashboardDAO {
      * Evalúa el estado del sistema según la tabla EstadoSistema.
      */
     public String obtenerEstadoSistema() {
-        String sql = "SELECT estado FROM EstadoSistema";
+        String sql = "SELECT nombre_estado FROM EstadoSistema";
         boolean hayWarn = false, hayError = false, hayCritico = false;
 
         try {
@@ -144,7 +132,7 @@ public class DashboardDAO {
                  ResultSet rs = stmt.executeQuery(sql)) {
 
                 while (rs.next()) {
-                    String estado = rs.getString("estado").toUpperCase();
+                    String estado = rs.getString("nombre_estado").toUpperCase();
 
                     switch (estado) {
                         case "CRITICAL":

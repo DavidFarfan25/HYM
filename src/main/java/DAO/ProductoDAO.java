@@ -13,7 +13,7 @@ public class ProductoDAO {
 
     private static final Logger logger = LoggerFactory.getLogger(ProductoDAO.class);
 
-    // Lista todos los productos visibles
+    
     public List<Producto> listarProductos() {
         logger.info("Consultando todos los productos visibles");
         List<Producto> productos = new ArrayList<>();
@@ -35,7 +35,7 @@ public class ProductoDAO {
         return productos;
     }
 
-    // Búsqueda por nombre o código
+    
     public List<Producto> buscarPorNombreOCodigo(String termino) {
         Preconditions.checkNotNull(termino, "El término de búsqueda no puede ser null");
 
@@ -64,7 +64,7 @@ public class ProductoDAO {
         return productos;
     }
 
-    // Buscar producto por código
+    
     public Producto buscarPorCodigo(String codigo) {
         Preconditions.checkNotNull(codigo, "El código no puede ser null");
 
@@ -89,7 +89,7 @@ public class ProductoDAO {
         return null;
     }
 
-    // Obtener solo info básica del producto
+   
     public Producto obtenerInfoProducto(String codigo) {
         Preconditions.checkNotNull(codigo, "El código no puede ser null");
 
@@ -119,7 +119,7 @@ public class ProductoDAO {
         return null;
     }
 
-    // Ocultar un producto
+   
     public boolean ocultarProductoPorCodigo(String codigo) {
         Preconditions.checkNotNull(codigo, "El código no puede ser null");
 
@@ -139,7 +139,7 @@ public class ProductoDAO {
         return false;
     }
 
-    // Actualiza un producto completo
+    
     public boolean actualizarProducto(Producto producto) {
         Preconditions.checkNotNull(producto, "El producto no puede ser null");
         Preconditions.checkNotNull(producto.getCodigo(), "El código del producto no puede ser null");
@@ -173,7 +173,7 @@ public class ProductoDAO {
         return false;
     }
 
-    // Inserta un nuevo producto
+  
     public boolean registrarProducto(Producto producto) {
         String sql = "INSERT INTO Producto (nombre, categoria, talla, precio, stock, codigo, color, imagen, " +
              "fecha_creacion, ultima_actualizacion, visible) " +
@@ -200,7 +200,7 @@ public class ProductoDAO {
         return false;
     }
 
-    // Mapea un producto desde un ResultSet
+    
     private Producto mapearProducto(ResultSet rs) throws SQLException {
         Producto producto = new Producto();
 
