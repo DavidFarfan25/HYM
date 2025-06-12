@@ -7,10 +7,6 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
 
-
-/**
- * Vista principal para la gestión del inventario de productos.
- */
 public final class inventario extends javax.swing.JFrame {
 
     private final InventarioControlador ctrl = new InventarioControlador();
@@ -22,9 +18,6 @@ public final class inventario extends javax.swing.JFrame {
         actualizarTablaCompleta();
          }
 
-    /**
-     * Consulta y carga todos los productos visibles en la tabla.
-     */
     public void actualizarTablaCompleta() {
         try {
             List<Producto> productos = ctrl.listarProductos();
@@ -35,13 +28,9 @@ public final class inventario extends javax.swing.JFrame {
         }
     }
 
-    /**
-     * Llena la tabla con una lista de productos.Si un producto está inhabilitado, se marca visualmente en su código.
-     * @param lista
-     */
     public void cargarTabla(List<Producto> lista) {
         DefaultTableModel modelo = (DefaultTableModel) tablaInventario.getModel();
-        modelo.setRowCount(0); // Limpiar la tabla antes de llenarla
+        modelo.setRowCount(0); 
 
         for (Producto p : lista) {
             String codigoMostrado = p.isVisible()
@@ -60,9 +49,6 @@ public final class inventario extends javax.swing.JFrame {
         }
     }
 
-    /**
-     * Limpia los campos del formulario de producto.
-     */
     private void limpiarCampos() {
         txtProductoCodigo.setText("");
         lblProductoPorCodigo.setText("");

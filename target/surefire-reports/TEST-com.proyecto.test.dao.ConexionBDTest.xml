@@ -1,89 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.proyecto.test.dao.ConexionBDTest" time="0.362" tests="4" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.proyecto.test.dao.ConexionBDTest" time="0.57" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="sun.desktop" value="windows"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
     <property name="java.specification.version" value="11"/>
     <property name="sun.cpu.isalist" value="amd64"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
-    <property name="java.class.path" value="C:\Users\Diego\Desktop\HYM\HYM\target\test-classes;C:\Users\Diego\Desktop\HYM\HYM\target\classes;C:\Users\Diego\.m2\repository\com\microsoft\sqlserver\mssql-jdbc\12.10.0.jre11\mssql-jdbc-12.10.0.jre11.jar;C:\Users\Diego\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.0\junit-jupiter-api-5.10.0.jar;C:\Users\Diego\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\Diego\.m2\repository\org\junit\platform\junit-platform-commons\1.10.0\junit-platform-commons-1.10.0.jar;C:\Users\Diego\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\Diego\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.0\junit-jupiter-engine-5.10.0.jar;C:\Users\Diego\.m2\repository\org\junit\platform\junit-platform-engine\1.10.0\junit-platform-engine-1.10.0.jar;C:\Users\Diego\.m2\repository\org\mockito\mockito-core\5.11.0\mockito-core-5.11.0.jar;C:\Users\Diego\.m2\repository\net\bytebuddy\byte-buddy\1.14.12\byte-buddy-1.14.12.jar;C:\Users\Diego\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.12\byte-buddy-agent-1.14.12.jar;C:\Users\Diego\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\Diego\.m2\repository\org\mockito\mockito-junit-jupiter\5.11.0\mockito-junit-jupiter-5.11.0.jar;C:\Users\Diego\.m2\repository\com\google\guava\guava\33.1.0-jre\guava-33.1.0-jre.jar;C:\Users\Diego\.m2\repository\com\google\guava\failureaccess\1.0.2\failureaccess-1.0.2.jar;C:\Users\Diego\.m2\repository\com\google\guava\listenablefuture\9999.0-empty-to-avoid-conflict-with-guava\listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar;C:\Users\Diego\.m2\repository\com\google\code\findbugs\jsr305\3.0.2\jsr305-3.0.2.jar;C:\Users\Diego\.m2\repository\org\checkerframework\checker-qual\3.42.0\checker-qual-3.42.0.jar;C:\Users\Diego\.m2\repository\com\google\errorprone\error_prone_annotations\2.26.1\error_prone_annotations-2.26.1.jar;C:\Users\Diego\.m2\repository\com\google\j2objc\j2objc-annotations\3.0.0\j2objc-annotations-3.0.0.jar;C:\Users\Diego\.m2\repository\ch\qos\logback\logback-classic\1.4.14\logback-classic-1.4.14.jar;C:\Users\Diego\.m2\repository\ch\qos\logback\logback-core\1.4.14\logback-core-1.4.14.jar;C:\Users\Diego\.m2\repository\org\slf4j\slf4j-api\2.0.7\slf4j-api-2.0.7.jar;"/>
+    <property name="java.class.path" value="C:\Users\Dave\Documents\NetBeansProjects\HYM\target\test-classes;C:\Users\Dave\Documents\NetBeansProjects\HYM\target\classes;C:\Users\Dave\.m2\repository\com\microsoft\sqlserver\mssql-jdbc\12.10.0.jre11\mssql-jdbc-12.10.0.jre11.jar;C:\Users\Dave\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.0\junit-jupiter-api-5.10.0.jar;C:\Users\Dave\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\Dave\.m2\repository\org\junit\platform\junit-platform-commons\1.10.0\junit-platform-commons-1.10.0.jar;C:\Users\Dave\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\Dave\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.0\junit-jupiter-engine-5.10.0.jar;C:\Users\Dave\.m2\repository\org\junit\platform\junit-platform-engine\1.10.0\junit-platform-engine-1.10.0.jar;C:\Users\Dave\.m2\repository\org\mockito\mockito-core\5.11.0\mockito-core-5.11.0.jar;C:\Users\Dave\.m2\repository\net\bytebuddy\byte-buddy\1.14.12\byte-buddy-1.14.12.jar;C:\Users\Dave\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.12\byte-buddy-agent-1.14.12.jar;C:\Users\Dave\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\Dave\.m2\repository\org\mockito\mockito-junit-jupiter\5.11.0\mockito-junit-jupiter-5.11.0.jar;C:\Users\Dave\.m2\repository\com\google\guava\guava\33.1.0-jre\guava-33.1.0-jre.jar;C:\Users\Dave\.m2\repository\com\google\guava\failureaccess\1.0.2\failureaccess-1.0.2.jar;C:\Users\Dave\.m2\repository\com\google\guava\listenablefuture\9999.0-empty-to-avoid-conflict-with-guava\listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar;C:\Users\Dave\.m2\repository\com\google\code\findbugs\jsr305\3.0.2\jsr305-3.0.2.jar;C:\Users\Dave\.m2\repository\org\checkerframework\checker-qual\3.42.0\checker-qual-3.42.0.jar;C:\Users\Dave\.m2\repository\com\google\errorprone\error_prone_annotations\2.26.1\error_prone_annotations-2.26.1.jar;C:\Users\Dave\.m2\repository\com\google\j2objc\j2objc-annotations\3.0.0\j2objc-annotations-3.0.0.jar;C:\Users\Dave\.m2\repository\ch\qos\logback\logback-classic\1.4.14\logback-classic-1.4.14.jar;C:\Users\Dave\.m2\repository\ch\qos\logback\logback-core\1.4.14\logback-core-1.4.14.jar;C:\Users\Dave\.m2\repository\org\slf4j\slf4j-api\2.0.7\slf4j-api-2.0.7.jar;"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="user.variant" value=""/>
-    <property name="java.vendor.url" value="https://openjdk.java.net/"/>
-    <property name="user.timezone" value="America/Lima"/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="user.timezone" value="America/Bogota"/>
     <property name="java.vm.specification.version" value="11"/>
-    <property name="os.name" value="Windows 11"/>
+    <property name="os.name" value="Windows 10"/>
     <property name="user.country" value="PE"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-11\bin"/>
-    <property name="sun.java.command" value="C:\Users\Diego\AppData\Local\Temp\surefire3292931215282287393\surefirebooter-20250610142603402_3.jar C:\Users\Diego\AppData\Local\Temp\surefire3292931215282287393 2025-06-10T14-26-03_201-jvmRun1 surefire-20250610142603402_1tmp surefire_0-20250610142603402_2tmp"/>
+    <property name="sun.java.command" value="C:\Users\Dave\AppData\Local\Temp\surefire2729631720475890311\surefirebooter-20250611224052517_3.jar C:\Users\Dave\AppData\Local\Temp\surefire2729631720475890311 2025-06-11T22-40-52_327-jvmRun1 surefire-20250611224052517_1tmp surefire_0-20250611224052517_2tmp"/>
     <property name="jdk.debug" value="release"/>
-    <property name="surefire.test.class.path" value="C:\Users\Diego\Desktop\HYM\HYM\target\test-classes;C:\Users\Diego\Desktop\HYM\HYM\target\classes;C:\Users\Diego\.m2\repository\com\microsoft\sqlserver\mssql-jdbc\12.10.0.jre11\mssql-jdbc-12.10.0.jre11.jar;C:\Users\Diego\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.0\junit-jupiter-api-5.10.0.jar;C:\Users\Diego\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\Diego\.m2\repository\org\junit\platform\junit-platform-commons\1.10.0\junit-platform-commons-1.10.0.jar;C:\Users\Diego\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\Diego\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.0\junit-jupiter-engine-5.10.0.jar;C:\Users\Diego\.m2\repository\org\junit\platform\junit-platform-engine\1.10.0\junit-platform-engine-1.10.0.jar;C:\Users\Diego\.m2\repository\org\mockito\mockito-core\5.11.0\mockito-core-5.11.0.jar;C:\Users\Diego\.m2\repository\net\bytebuddy\byte-buddy\1.14.12\byte-buddy-1.14.12.jar;C:\Users\Diego\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.12\byte-buddy-agent-1.14.12.jar;C:\Users\Diego\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\Diego\.m2\repository\org\mockito\mockito-junit-jupiter\5.11.0\mockito-junit-jupiter-5.11.0.jar;C:\Users\Diego\.m2\repository\com\google\guava\guava\33.1.0-jre\guava-33.1.0-jre.jar;C:\Users\Diego\.m2\repository\com\google\guava\failureaccess\1.0.2\failureaccess-1.0.2.jar;C:\Users\Diego\.m2\repository\com\google\guava\listenablefuture\9999.0-empty-to-avoid-conflict-with-guava\listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar;C:\Users\Diego\.m2\repository\com\google\code\findbugs\jsr305\3.0.2\jsr305-3.0.2.jar;C:\Users\Diego\.m2\repository\org\checkerframework\checker-qual\3.42.0\checker-qual-3.42.0.jar;C:\Users\Diego\.m2\repository\com\google\errorprone\error_prone_annotations\2.26.1\error_prone_annotations-2.26.1.jar;C:\Users\Diego\.m2\repository\com\google\j2objc\j2objc-annotations\3.0.0\j2objc-annotations-3.0.0.jar;C:\Users\Diego\.m2\repository\ch\qos\logback\logback-classic\1.4.14\logback-classic-1.4.14.jar;C:\Users\Diego\.m2\repository\ch\qos\logback\logback-core\1.4.14\logback-core-1.4.14.jar;C:\Users\Diego\.m2\repository\org\slf4j\slf4j-api\2.0.7\slf4j-api-2.0.7.jar;"/>
+    <property name="test" value="com.proyecto.test.dao.ConexionBDTest#testCerrarConexion"/>
+    <property name="surefire.test.class.path" value="C:\Users\Dave\Documents\NetBeansProjects\HYM\target\test-classes;C:\Users\Dave\Documents\NetBeansProjects\HYM\target\classes;C:\Users\Dave\.m2\repository\com\microsoft\sqlserver\mssql-jdbc\12.10.0.jre11\mssql-jdbc-12.10.0.jre11.jar;C:\Users\Dave\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.0\junit-jupiter-api-5.10.0.jar;C:\Users\Dave\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\Dave\.m2\repository\org\junit\platform\junit-platform-commons\1.10.0\junit-platform-commons-1.10.0.jar;C:\Users\Dave\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\Dave\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.0\junit-jupiter-engine-5.10.0.jar;C:\Users\Dave\.m2\repository\org\junit\platform\junit-platform-engine\1.10.0\junit-platform-engine-1.10.0.jar;C:\Users\Dave\.m2\repository\org\mockito\mockito-core\5.11.0\mockito-core-5.11.0.jar;C:\Users\Dave\.m2\repository\net\bytebuddy\byte-buddy\1.14.12\byte-buddy-1.14.12.jar;C:\Users\Dave\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.12\byte-buddy-agent-1.14.12.jar;C:\Users\Dave\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\Dave\.m2\repository\org\mockito\mockito-junit-jupiter\5.11.0\mockito-junit-jupiter-5.11.0.jar;C:\Users\Dave\.m2\repository\com\google\guava\guava\33.1.0-jre\guava-33.1.0-jre.jar;C:\Users\Dave\.m2\repository\com\google\guava\failureaccess\1.0.2\failureaccess-1.0.2.jar;C:\Users\Dave\.m2\repository\com\google\guava\listenablefuture\9999.0-empty-to-avoid-conflict-with-guava\listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar;C:\Users\Dave\.m2\repository\com\google\code\findbugs\jsr305\3.0.2\jsr305-3.0.2.jar;C:\Users\Dave\.m2\repository\org\checkerframework\checker-qual\3.42.0\checker-qual-3.42.0.jar;C:\Users\Dave\.m2\repository\com\google\errorprone\error_prone_annotations\2.26.1\error_prone_annotations-2.26.1.jar;C:\Users\Dave\.m2\repository\com\google\j2objc\j2objc-annotations\3.0.0\j2objc-annotations-3.0.0.jar;C:\Users\Dave\.m2\repository\ch\qos\logback\logback-classic\1.4.14\logback-classic-1.4.14.jar;C:\Users\Dave\.m2\repository\ch\qos\logback\logback-core\1.4.14\logback-core-1.4.14.jar;C:\Users\Dave\.m2\repository\org\slf4j\slf4j-api\2.0.7\slf4j-api-2.0.7.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
-    <property name="user.home" value="C:\Users\Diego"/>
+    <property name="user.home" value="C:\Users\Dave"/>
     <property name="user.language" value="es"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
-    <property name="java.version.date" value="2025-01-21"/>
+    <property name="java.version.date" value="2018-09-25"/>
     <property name="java.home" value="C:\Program Files\Java\jdk-11"/>
     <property name="file.separator" value="\"/>
-    <property name="basedir" value="C:\Users\Diego\Desktop\HYM\HYM"/>
+    <property name="basedir" value="C:\Users\Dave\Documents\NetBeansProjects\HYM"/>
     <property name="java.vm.compressedOopsMode" value="Zero based"/>
     <property name="line.separator" value="&#10;"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="C:\Users\Diego\AppData\Local\Temp\surefire3292931215282287393\surefirebooter-20250610142603402_3.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\Dave\AppData\Local\Temp\surefire2729631720475890311\surefirebooter-20250611224052517_3.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
-    <property name="java.runtime.version" value="11.0.26+7-LTS-187"/>
-    <property name="user.name" value="Diego"/>
+    <property name="java.runtime.version" value="11+28"/>
+    <property name="user.name" value="Dave"/>
     <property name="path.separator" value=";"/>
     <property name="os.version" value="10.0"/>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
-    <property name="file.encoding" value="Cp1252"/>
+    <property name="file.encoding" value="UTF-8"/>
     <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
     <property name="java.vendor.version" value="18.9"/>
-    <property name="maven.ext.class.path" value="C:\Program Files\NetBeans-25\netbeans\java\maven-nblib\netbeans-eventspy.jar"/>
-    <property name="localRepository" value="C:\Users\Diego\.m2\repository"/>
-    <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
-    <property name="java.io.tmpdir" value="C:\Users\Diego\AppData\Local\Temp\"/>
-    <property name="java.version" value="11.0.26"/>
-    <property name="user.dir" value="C:\Users\Diego\Desktop\HYM\HYM"/>
+    <property name="maven.ext.class.path" value="C:\Program Files\NetBeans-19\netbeans\java\maven-nblib\netbeans-eventspy.jar"/>
+    <property name="localRepository" value="C:\Users\Dave\.m2\repository"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.java.com/bugreport/"/>
+    <property name="java.io.tmpdir" value="C:\Users\Dave\AppData\Local\Temp\"/>
+    <property name="java.version" value="11"/>
+    <property name="user.dir" value="C:\Users\Dave\Documents\NetBeansProjects\HYM"/>
     <property name="os.arch" value="amd64"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
     <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
     <property name="sun.os.patch.level" value=""/>
-    <property name="java.library.path" value="C:\Program Files\Java\jdk-11\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files\NVIDIA Corporation\NVIDIA app\NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\nodejs\;C:\Program Files (x86)\Microsoft SQL Server\160\Tools\Binn\;C:\Program Files\Microsoft SQL Server\160\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Microsoft SQL Server\160\DTS\Binn\;C:\Users\Diego\AppData\Local\Microsoft\WindowsApps;C:\Users\Diego\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Diego\AppData\Roaming\npm;."/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk-11\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files (x86)\VMware\VMware Workstation\bin\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\Program Files\NVIDIA Corporation\NVIDIA App\NvDLISR;C:\Program Files (x86)\Microsoft SQL Server\160\Tools\Binn\;C:\Program Files\Microsoft SQL Server\160\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Microsoft SQL Server\160\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\160\DTS\Binn\;C:\Program Files\Git\cmd;C:\Users\Dave\AppData\Local\Programs\Python\Launcher\;C:\Users\Dave\AppData\Local\Microsoft\WindowsApps;C:\Users\Dave\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Dave\AppData\Roaming\npm;."/>
     <property name="java.vendor" value="Oracle Corporation"/>
     <property name="java.vm.info" value="mixed mode"/>
-    <property name="java.vm.version" value="11.0.26+7-LTS-187"/>
-    <property name="java.specification.maintenance.version" value="3"/>
+    <property name="java.vm.version" value="11+28"/>
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="55.0"/>
   </properties>
-  <testcase name="testObtenerConexionReutilizada" classname="com.proyecto.test.dao.ConexionBDTest" time="0.303">
-    <system-out><![CDATA[2025-06-10 14:26:05 [main] INFO  DAO.ConexionBD - Conexión exitosa a la base de datos.
-2025-06-10 14:26:05 [main] INFO  DAO.ConexionBD - Conexión cerrada correctamente.
-]]></system-out>
-  </testcase>
-  <testcase name="testObtenerConexionExitosa" classname="com.proyecto.test.dao.ConexionBDTest" time="0.028">
-    <system-out><![CDATA[2025-06-10 14:26:05 [main] INFO  DAO.ConexionBD - Conexión cerrada correctamente.
-2025-06-10 14:26:05 [main] INFO  DAO.ConexionBD - Conexión exitosa a la base de datos.
-2025-06-10 14:26:05 [main] INFO  DAO.ConexionBD - Conexión cerrada correctamente.
-]]></system-out>
-  </testcase>
-  <testcase name="testCerrarConexionSinConexionAbierta" classname="com.proyecto.test.dao.ConexionBDTest" time="0.002">
-    <system-out><![CDATA[2025-06-10 14:26:05 [main] INFO  DAO.ConexionBD - Conexión cerrada correctamente.
-2025-06-10 14:26:05 [main] INFO  DAO.ConexionBD - Conexión cerrada correctamente.
-2025-06-10 14:26:05 [main] INFO  DAO.ConexionBD - Conexión cerrada correctamente.
-]]></system-out>
-  </testcase>
-  <testcase name="testCerrarConexion" classname="com.proyecto.test.dao.ConexionBDTest" time="0.024">
-    <system-out><![CDATA[2025-06-10 14:26:05 [main] INFO  DAO.ConexionBD - Conexión cerrada correctamente.
-2025-06-10 14:26:05 [main] INFO  DAO.ConexionBD - Conexión exitosa a la base de datos.
-2025-06-10 14:26:05 [main] INFO  DAO.ConexionBD - Conexión cerrada correctamente.
-2025-06-10 14:26:05 [main] INFO  DAO.ConexionBD - Conexión cerrada correctamente.
+  <testcase name="testCerrarConexion" classname="com.proyecto.test.dao.ConexionBDTest" time="0.55">
+    <system-out><![CDATA[2025-06-11 22:40:53 [main] INFO  DAO.ConexionBD - Conexión exitosa a la base de datos.
+2025-06-11 22:40:53 [main] INFO  DAO.ConexionBD - Conexión cerrada correctamente.
+2025-06-11 22:40:53 [main] INFO  DAO.ConexionBD - Conexión cerrada correctamente.
 ]]></system-out>
   </testcase>
 </testsuite>

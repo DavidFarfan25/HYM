@@ -3,12 +3,8 @@ package Modelo;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-/**
- * Clase que representa un producto del inventario.
- */
 public class Producto {
 
-    // === Atributos ===
     private int id;
     private String nombre;
     private String categoria;
@@ -22,10 +18,7 @@ public class Producto {
     private Timestamp ultimaActualizacion;
     private boolean visible;
 
-    // === Constructores ===
-
     public Producto() {
-        // Constructor vacío por defecto
     }
 
     public Producto(
@@ -53,8 +46,6 @@ public class Producto {
         this.fechaCreacion = fechaCreacion;
         this.ultimaActualizacion = ultimaActualizacion;
     }
-
-    // === Getters y Setters ===
 
     public int getId() {
         return id;

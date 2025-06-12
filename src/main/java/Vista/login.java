@@ -1,11 +1,9 @@
 package Vista;
 
-import DAO.UsuarioDAO;
+import Controlador.LoginControlador;
 import javax.swing.JOptionPane;
 
-/**
- * Vista de inicio de sesión del sistema.
- */
+
 public class login extends javax.swing.JFrame {
 
     public login() {
@@ -142,15 +140,22 @@ public class login extends javax.swing.JFrame {
         String usuario = jTextField1.getText();
         String contrasena = new String(jPasswordField1.getPassword());
         
-        UsuarioDAO udao = new UsuarioDAO();
-        boolean acceso = udao.validarCredenciales(usuario, contrasena);
-
+        if (usuario.isEmpty() || contrasena.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor complete todos los campos", 
+                    "Campos vacíos", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        LoginControlador controlador = new LoginControlador();
+        boolean acceso = controlador.validarLogin(usuario, contrasena);
+        
         if (acceso) {
             dashboard db = new dashboard();
             db.setVisible(true);
             this.dispose();
         } else {
-            JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", "Error de acceso", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", 
+                    "Error de acceso", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 

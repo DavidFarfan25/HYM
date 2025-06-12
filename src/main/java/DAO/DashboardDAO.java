@@ -119,48 +119,42 @@ public class DashboardDAO {
         return lista;
     }
 
-    /**
-     * Evalúa el estado del sistema según la tabla EstadoSistema.
-     */
     public String obtenerEstadoSistema() {
-        String sql = "SELECT nombre_estado FROM EstadoSistema";
-        boolean hayWarn = false, hayError = false, hayCritico = false;
+    String sql = "SELECT nombre_estado FROM EstadoSistema WHERE id = 1";
 
-        try {
-            verificarConexion();
-            try (Statement stmt = conexion.createStatement();
-                 ResultSet rs = stmt.executeQuery(sql)) {
+    try {
+        verificarConexion();
 
-                while (rs.next()) {
-                    String estado = rs.getString("nombre_estado").toUpperCase();
+        try (Statement stmt = conexion.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
 
-                    switch (estado) {
-                        case "CRITICAL":
-                            hayCritico = true;
-                            break;
-                        case "ERROR":
-                            hayError = true;
-                            break;
-                        case "WARN":
-                            hayWarn = true;
-                            break;
-                        case "OK":
-                            break;
-                        default:
-                            logger.warn("Estado desconocido detectado: {}", estado);
-                            break;
-                    }
+            if (rs.next()) {
+                String estado = rs.getString("nombre_estado").toUpperCase();
+
+                switch (estado) {
+                    case "CRITICAL":
+                        return "Sistema inestable - Revisar urgentemente";
+                    case "ERROR":
+                        return "Error en sincronización de datos";
+                    case "WARN":
+                        return "Sistema funcionando con advertencias menores";
+                    case "OK":
+                        return "Todos los módulos funcionando correctamente";
+                    default:
+                        logger.warn("Estado desconocido detectado: {}", estado);
+                        return "Estado del sistema no reconocido: " + estado;
                 }
+            } else {
+                logger.warn("No se encontró ninguna fila en EstadoSistema con id = 1.");
+                return "No se pudo determinar el estado del sistema";
             }
 
-            if (hayCritico) return "Sistema inestable - Revisar urgentemente";
-            if (hayError) return "Error en sincronización de datos";
-            if (hayWarn) return "Sistema funcionando con advertencias menores";
-            return "Todos los módulos funcionando correctamente";
-
-        } catch (SQLException e) {
-            logger.error("Error al evaluar el estado del sistema", e);
-            return "No se pudo determinar el estado del sistema";
         }
+
+    } catch (SQLException e) {
+        logger.error("Error al evaluar el estado del sistema", e);
+        return "No se pudo determinar el estado del sistema";
     }
+}
+
 }

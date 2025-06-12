@@ -6,9 +6,6 @@ import Modelo.DashboardResumen;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-/**
- * Pantalla principal del Dashboard que muestra resumen del sistema.
- */
 public class dashboard extends javax.swing.JFrame {
 
     private final DashboardControlador controlador;
@@ -24,9 +21,6 @@ public class dashboard extends javax.swing.JFrame {
         iniciarActualizacionAutomatica();
     }
 
-    /**
-     * Carga y actualiza los datos de los paneles del dashboard.
-     */
     private void cargarDatosDashboard() {
         DashboardResumen resumen = controlador.obtenerResumen();
 
@@ -54,10 +48,7 @@ public class dashboard extends javax.swing.JFrame {
         lblEstadoSistema.setText(resumen.getEstadoSistema());
     }
 
-    /**
-     * Inicia el temporizador que actualiza el dashboard automáticamente cada 20 segundos.
-     */
-    private void iniciarActualizacionAutomatica() {
+     private void iniciarActualizacionAutomatica() {
         refrescoTimer = new Timer(20000, (ActionEvent e) -> cargarDatosDashboard());
         refrescoTimer.start();
     }

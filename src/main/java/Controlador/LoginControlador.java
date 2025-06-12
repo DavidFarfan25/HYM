@@ -18,16 +18,20 @@ public class LoginControlador {
     }
     
     public boolean validarLogin(String usuario, String contrasena) {
+    try {
         logger.info("Intento de inicio de sesión para el usuario: {}", usuario);
-
         boolean valido = usuarioDAO.validarCredenciales(usuario, contrasena);
-
+        
         if (valido) {
             logger.info("Inicio de sesión exitoso para: {}", usuario);
         } else {
             logger.warn("Inicio de sesión fallido para: {}", usuario);
         }
-
         return valido;
+    } catch (Exception e) {
+        logger.error("Error durante la validación de login para usuario {}: {}", 
+                    usuario, e.getMessage(), e);
+        return false;
     }
+}
 }

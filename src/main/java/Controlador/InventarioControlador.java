@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -101,52 +103,73 @@ public class InventarioControlador {
 
 
     public void iniciarSimuladorDeStock() {
-        if (simuladorTimer != null && simuladorTimer.isRunning()) {
-            logger.info("El simulador ya está en ejecución.");
+    if (simuladorTimer != null && simuladorTimer.isRunning()) {
+        logger.info("El simulador ya está en ejecución.");
+        return;
+    }
+
+    simuladorTimer = new Timer(2000, (ActionEvent e) -> {
+        List<Producto> productos = productoDAO.listarProductos();
+        List<Producto> disponibles = new ArrayList<>();
+
+        for (Producto p : productos) {
+            if (p.getStock() > 0) {
+                disponibles.add(p);
+            }
+        }
+
+        if (disponibles.isEmpty()) {
+            logger.info("No hay productos con stock disponible.");
             return;
         }
 
-        simuladorTimer = new Timer(10000, (ActionEvent e) -> {
-            List<Producto> productos = productoDAO.listarProductos();
+        Collections.shuffle(disponibles);
 
-            for (Producto producto : productos) {
-                if (producto.getStock() > 0) {
-                    int nuevoStock = producto.getStock() - 1;
-                    producto.setStock(nuevoStock);
-                    productoDAO.actualizarProducto(producto);
+        int limite = Math.min(30, disponibles.size());
 
-                    logger.info("Stock actualizado: {} = {}", producto.getNombre(), nuevoStock);
+        for (int i = 0; i < limite; i++) {
+            Producto producto = disponibles.get(i);
+            int stockActual = producto.getStock();
+            int nuevoStock;
 
-                    // Alerta de stock bajo
-                    if (nuevoStock == 15 || nuevoStock == 10 || nuevoStock == 5) {
-                        JOptionPane.showMessageDialog(
-                                null,
-                                "STOCK BAJO: El producto \"" + producto.getNombre() + "\" tiene " + nuevoStock + " unidades.",
-                                "Alerta de Stock Bajo",
-                                JOptionPane.WARNING_MESSAGE
-                        );
-                    }
-
-                    // Alerta crítica
-                    if (nuevoStock <= 5) {
-                        JOptionPane.showMessageDialog(
-                                null,
-                                "STOCK CRÍTICO: El producto \"" + producto.getNombre() + "\" tiene solo " + nuevoStock + " unidades.",
-                                "¡ALERTA CRÍTICA!",
-                                JOptionPane.ERROR_MESSAGE
-                        );
-                    }
-                }
+            if (stockActual >= 10) {
+                nuevoStock = stockActual - 10;
+            } else {
+                nuevoStock = stockActual - 1;
             }
-        });
 
-        simuladorTimer.start();
-        logger.info("Simulador de reducción de stock iniciado.");
-    }
+            nuevoStock = Math.max(0, nuevoStock);
 
-    /**
-     * Detiene la ejecución del simulador de stock.
-     */
+            producto.setStock(nuevoStock);
+            productoDAO.actualizarProducto(producto);
+
+            logger.info("Stock actualizado: {} = {}", producto.getNombre(), nuevoStock);
+
+            if (nuevoStock == 15 || nuevoStock == 10 || nuevoStock == 5) {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "STOCK BAJO: El producto \"" + producto.getNombre() + "\" tiene " + nuevoStock + " unidades.",
+                        "Alerta de Stock Bajo",
+                        JOptionPane.WARNING_MESSAGE
+                );
+            }
+
+            if (nuevoStock <= 5 && stockActual > 0) {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "STOCK CRÍTICO: El producto \"" + producto.getNombre() + "\" tiene solo " + nuevoStock + " unidades.",
+                        "¡ALERTA CRÍTICA!",
+                        JOptionPane.ERROR_MESSAGE
+                );
+            }
+        }
+    });
+
+    simuladorTimer.start();
+    logger.info("Simulador de reducción de stock iniciado.");
+}
+
+    
     public void detenerSimuladorDeStock() {
         if (simuladorTimer != null) {
             simuladorTimer.stop();
