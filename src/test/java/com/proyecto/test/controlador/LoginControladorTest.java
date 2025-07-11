@@ -1,7 +1,7 @@
 package com.proyecto.test.controlador;
 
 import Controlador.LoginControlador;
-import DAO.UsuarioDAO;
+import DAO.TIDAO;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ import static org.mockito.Mockito.*;
 public class LoginControladorTest {
 
     @Mock
-    private UsuarioDAO usuarioDAO;
+    private TIDAO usuarioDAO;
 
     @InjectMocks
     private LoginControlador controlador;

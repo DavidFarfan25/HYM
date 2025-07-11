@@ -1,10 +1,42 @@
 package Vista;
+
+import DAO.ConexionBD;
+import Modelo.SesionUsuario;
+import java.sql.Connection;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 public class reporte extends javax.swing.JFrame {
 
     public reporte() {
         initComponents();
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        aplicarRestriccionesPorRol();
+    }
+    
+    private void aplicarRestriccionesPorRol() {
+        String rol = SesionUsuario.getRol();
+
+        if (SesionUsuario.esAdmin()) {
+            PantallaTI.setEnabled(false);
+        }
+
+        if (SesionUsuario.esTrabajador()) {
+            PantallaReportes.setEnabled(false);
+            PantallaTI.setEnabled(false);
+            PantallaDashboard.setEnabled(false);
+        }
+
+        if (SesionUsuario.esTI()) {
+            PantallaReportes.setEnabled(false);
+            PantallaDashboard.setEnabled(false);
+            PantallaInventario.setEnabled(false);
+        }
+        
+        if (SesionUsuario.esSupervisor()) {            
+            PantallaTI.setEnabled(false); 
+        }
     }
     
     @SuppressWarnings("unchecked")
@@ -33,16 +65,16 @@ public class reporte extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jLabel4 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        LblDashboard = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        PantallaDashboard = new javax.swing.JButton();
+        PantallaInventario = new javax.swing.JButton();
+        PantallaTI = new javax.swing.JButton();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
-        jButton11 = new javax.swing.JButton();
+        PantallaReportes = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
@@ -283,9 +315,9 @@ public class reporte extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(255, 102, 102));
 
-        jLabel1.setFont(new java.awt.Font("Tw Cen MT", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Dashboard");
+        LblDashboard.setFont(new java.awt.Font("Tw Cen MT", 1, 24)); // NOI18N
+        LblDashboard.setForeground(new java.awt.Color(255, 255, 255));
+        LblDashboard.setText("Dashboard");
 
         jLabel2.setFont(new java.awt.Font("Tw Cen MT", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -295,33 +327,33 @@ public class reporte extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Reportes");
 
-        jButton1.setBackground(new java.awt.Color(255, 133, 133));
-        jButton1.setFont(new java.awt.Font("Tw Cen MT", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("+");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        PantallaDashboard.setBackground(new java.awt.Color(255, 133, 133));
+        PantallaDashboard.setFont(new java.awt.Font("Tw Cen MT", 1, 14)); // NOI18N
+        PantallaDashboard.setForeground(new java.awt.Color(255, 255, 255));
+        PantallaDashboard.setText("+");
+        PantallaDashboard.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                PantallaDashboardActionPerformed(evt);
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(255, 133, 133));
-        jButton3.setFont(new java.awt.Font("Tw Cen MT", 1, 14)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("+");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        PantallaInventario.setBackground(new java.awt.Color(255, 133, 133));
+        PantallaInventario.setFont(new java.awt.Font("Tw Cen MT", 1, 14)); // NOI18N
+        PantallaInventario.setForeground(new java.awt.Color(255, 255, 255));
+        PantallaInventario.setText("+");
+        PantallaInventario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                PantallaInventarioActionPerformed(evt);
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(255, 133, 133));
-        jButton4.setFont(new java.awt.Font("Tw Cen MT", 1, 14)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("+");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        PantallaTI.setBackground(new java.awt.Color(255, 133, 133));
+        PantallaTI.setFont(new java.awt.Font("Tw Cen MT", 1, 14)); // NOI18N
+        PantallaTI.setForeground(new java.awt.Color(255, 255, 255));
+        PantallaTI.setText("+");
+        PantallaTI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                PantallaTIActionPerformed(evt);
             }
         });
 
@@ -331,15 +363,15 @@ public class reporte extends javax.swing.JFrame {
 
         jLabel21.setFont(new java.awt.Font("Tw Cen MT", 1, 24)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel21.setText("Editar");
+        jLabel21.setText("Área de TI");
 
-        jButton11.setBackground(new java.awt.Color(255, 133, 133));
-        jButton11.setFont(new java.awt.Font("Tw Cen MT", 1, 14)); // NOI18N
-        jButton11.setForeground(new java.awt.Color(255, 255, 255));
-        jButton11.setText("+");
-        jButton11.addActionListener(new java.awt.event.ActionListener() {
+        PantallaReportes.setBackground(new java.awt.Color(255, 133, 133));
+        PantallaReportes.setFont(new java.awt.Font("Tw Cen MT", 1, 14)); // NOI18N
+        PantallaReportes.setForeground(new java.awt.Color(255, 255, 255));
+        PantallaReportes.setText("+");
+        PantallaReportes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton11ActionPerformed(evt);
+                PantallaReportesActionPerformed(evt);
             }
         });
 
@@ -363,9 +395,10 @@ public class reporte extends javax.swing.JFrame {
         jSeparator5.setAlignmentX(2.0F);
         jSeparator5.setAlignmentY(2.0F);
 
-        jButton2.setFont(new java.awt.Font("Goudy Old Style", 1, 16)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 102, 102));
-        jButton2.setText("INICIO");
+        jButton2.setBackground(new java.awt.Color(153, 153, 153));
+        jButton2.setFont(new java.awt.Font("Lucida Console", 1, 18)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("LOG OUT");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -383,10 +416,10 @@ public class reporte extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
-                    .addComponent(jButton11))
+                    .addComponent(PantallaDashboard)
+                    .addComponent(PantallaInventario)
+                    .addComponent(PantallaTI)
+                    .addComponent(PantallaReportes))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -397,7 +430,7 @@ public class reporte extends javax.swing.JFrame {
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
+                            .addComponent(LblDashboard, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -406,10 +439,13 @@ public class reporte extends javax.swing.JFrame {
                         .addGap(24, 24, 24))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2)
                             .addComponent(jLabel20)
                             .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(jButton2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -422,30 +458,30 @@ public class reporte extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1)
-                            .addComponent(jButton1))
+                            .addComponent(LblDashboard)
+                            .addComponent(PantallaDashboard))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(jButton3))
+                            .addComponent(PantallaInventario))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27)
                         .addComponent(jLabel21))
-                    .addComponent(jButton4))
+                    .addComponent(PantallaTI))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton11)
+                    .addComponent(PantallaReportes)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(68, 68, 68))
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(64, 64, 64))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -495,29 +531,34 @@ public class reporte extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void PantallaDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PantallaDashboardActionPerformed
         dashboard db = new dashboard ();
         db.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_PantallaDashboardActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void PantallaInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PantallaInventarioActionPerformed
         inventario inv1 = new inventario ();
         inv1.setVisible (true);
         this.dispose();
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_PantallaInventarioActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        editar edt1 = new editar();
+    private void PantallaTIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PantallaTIActionPerformed
+        try {
+        Connection conn = ConexionBD.obtenerConexion(); // puede lanzar SQLException
+        TI edt1 = new TI(conn);
         edt1.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton4ActionPerformed
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Error al abrir Área TI: " + ex.getMessage());
+    }
+    }//GEN-LAST:event_PantallaTIActionPerformed
 
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+    private void PantallaReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PantallaReportesActionPerformed
         reporte rep1=new reporte();
         rep1.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton11ActionPerformed
+    }//GEN-LAST:event_PantallaReportesActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         login lg1= new login ();
@@ -527,16 +568,16 @@ public class reporte extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboBox2;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton11;
+    private javax.swing.JLabel LblDashboard;
+    private javax.swing.JButton PantallaDashboard;
+    private javax.swing.JButton PantallaInventario;
+    private javax.swing.JButton PantallaReportes;
+    private javax.swing.JButton PantallaTI;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;

@@ -1,8 +1,10 @@
 package Vista;
 
 import Controlador.LoginControlador;
+import DAO.ConexionBD;
+import java.sql.Connection;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
-
 
 public class login extends javax.swing.JFrame {
 
@@ -137,26 +139,67 @@ public class login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String usuario = jTextField1.getText();
-        String contrasena = new String(jPasswordField1.getPassword());
-        
-        if (usuario.isEmpty() || contrasena.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor complete todos los campos", 
-                    "Campos vacíos", JOptionPane.WARNING_MESSAGE);
+       String usuario = jTextField1.getText();
+String contrasena = new String(jPasswordField1.getPassword());
+
+if (usuario.isEmpty() || contrasena.isEmpty()) {
+    JOptionPane.showMessageDialog(this, "Por favor complete todos los campos",
+            "Campos vacíos", JOptionPane.WARNING_MESSAGE);
+    return;
+}
+
+LoginControlador controlador;
+try {
+    controlador = new LoginControlador(); // esto puede lanzar SQLException
+} catch (SQLException e) {
+    JOptionPane.showMessageDialog(this, "Error de conexión a la base de datos: " + e.getMessage());
+    return;
+}
+
+boolean acceso = controlador.validarLogin(usuario, contrasena);
+
+if (acceso) {
+    String rol = controlador.obtenerRol(usuario);
+
+    Modelo.SesionUsuario.iniciarSesion(usuario, rol);
+
+    switch (rol.toUpperCase()) {
+        case "ADMIN":
+            new dashboard().setVisible(true);
+            break;
+            
+        case "GERENTE":
+            new dashboard().setVisible(true);
+            break;    
+
+        case "TRABAJADOR":
+            new inventario().setVisible(true);
+            break;
+
+        case "TI":
+            try {
+                Connection conn = ConexionBD.obtenerConexion();
+                TI edt1 = new TI(conn);
+                edt1.setVisible(true);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, "Error al abrir Área TI: " + ex.getMessage());
+            }
+            break; // ✅ IMPORTANTE
+
+        case "SUPERVISOR":
+            new reporte().setVisible(true);
+            break;
+
+        default:
+            JOptionPane.showMessageDialog(this, "Rol desconocido: " + rol);
             return;
-        }
-        
-        LoginControlador controlador = new LoginControlador();
-        boolean acceso = controlador.validarLogin(usuario, contrasena);
-        
-        if (acceso) {
-            dashboard db = new dashboard();
-            db.setVisible(true);
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", 
-                    "Error de acceso", JOptionPane.ERROR_MESSAGE);
-        }
+    }
+
+    this.dispose();
+} else {
+    JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos");
+}
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.proyecto.test.dao.DashboardDAOTest" time="0.111" tests="4" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.proyecto.test.dao.DashboardDAOTest" time="0.123" tests="4" errors="0" skipped="0" failures="0">
   <properties>
     <property name="sun.desktop" value="windows"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
@@ -17,7 +17,7 @@
     <property name="user.country" value="PE"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-11\bin"/>
-    <property name="sun.java.command" value="C:\Users\Dave\AppData\Local\Temp\surefire5166885075401474070\surefirebooter-20250611224008086_3.jar C:\Users\Dave\AppData\Local\Temp\surefire5166885075401474070 2025-06-11T22-40-07_897-jvmRun1 surefire-20250611224008086_1tmp surefire_0-20250611224008086_2tmp"/>
+    <property name="sun.java.command" value="C:\Users\Dave\AppData\Local\Temp\surefire3025216919591212611\surefirebooter-20250705003238829_3.jar C:\Users\Dave\AppData\Local\Temp\surefire3025216919591212611 2025-07-05T00-32-38_635-jvmRun1 surefire-20250705003238829_1tmp surefire_0-20250705003238829_2tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\Dave\Documents\NetBeansProjects\HYM\target\test-classes;C:\Users\Dave\Documents\NetBeansProjects\HYM\target\classes;C:\Users\Dave\.m2\repository\com\microsoft\sqlserver\mssql-jdbc\12.10.0.jre11\mssql-jdbc-12.10.0.jre11.jar;C:\Users\Dave\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.0\junit-jupiter-api-5.10.0.jar;C:\Users\Dave\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\Dave\.m2\repository\org\junit\platform\junit-platform-commons\1.10.0\junit-platform-commons-1.10.0.jar;C:\Users\Dave\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\Dave\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.0\junit-jupiter-engine-5.10.0.jar;C:\Users\Dave\.m2\repository\org\junit\platform\junit-platform-engine\1.10.0\junit-platform-engine-1.10.0.jar;C:\Users\Dave\.m2\repository\org\mockito\mockito-core\5.11.0\mockito-core-5.11.0.jar;C:\Users\Dave\.m2\repository\net\bytebuddy\byte-buddy\1.14.12\byte-buddy-1.14.12.jar;C:\Users\Dave\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.12\byte-buddy-agent-1.14.12.jar;C:\Users\Dave\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\Dave\.m2\repository\org\mockito\mockito-junit-jupiter\5.11.0\mockito-junit-jupiter-5.11.0.jar;C:\Users\Dave\.m2\repository\com\google\guava\guava\33.1.0-jre\guava-33.1.0-jre.jar;C:\Users\Dave\.m2\repository\com\google\guava\failureaccess\1.0.2\failureaccess-1.0.2.jar;C:\Users\Dave\.m2\repository\com\google\guava\listenablefuture\9999.0-empty-to-avoid-conflict-with-guava\listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar;C:\Users\Dave\.m2\repository\com\google\code\findbugs\jsr305\3.0.2\jsr305-3.0.2.jar;C:\Users\Dave\.m2\repository\org\checkerframework\checker-qual\3.42.0\checker-qual-3.42.0.jar;C:\Users\Dave\.m2\repository\com\google\errorprone\error_prone_annotations\2.26.1\error_prone_annotations-2.26.1.jar;C:\Users\Dave\.m2\repository\com\google\j2objc\j2objc-annotations\3.0.0\j2objc-annotations-3.0.0.jar;C:\Users\Dave\.m2\repository\ch\qos\logback\logback-classic\1.4.14\logback-classic-1.4.14.jar;C:\Users\Dave\.m2\repository\ch\qos\logback\logback-core\1.4.14\logback-core-1.4.14.jar;C:\Users\Dave\.m2\repository\org\slf4j\slf4j-api\2.0.7\slf4j-api-2.0.7.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -33,7 +33,7 @@
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="C:\Users\Dave\AppData\Local\Temp\surefire5166885075401474070\surefirebooter-20250611224008086_3.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\Dave\AppData\Local\Temp\surefire3025216919591212611\surefirebooter-20250705003238829_3.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="11+28"/>
@@ -61,26 +61,26 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="55.0"/>
   </properties>
-  <testcase name="testContarProductosPorStock" classname="com.proyecto.test.dao.DashboardDAOTest" time="0.054">
-    <system-out><![CDATA[2025-06-11 22:40:10 [main] INFO  DAO.ConexionBD - Conexión exitosa a la base de datos.
-2025-06-11 22:40:10 [main] INFO  DAO.ConexionBD - Conexión cerrada correctamente.
+  <testcase name="testContarProductosPorStock" classname="com.proyecto.test.dao.DashboardDAOTest" time="0.062">
+    <system-out><![CDATA[2025-07-05 00:32:40 [main] INFO  DAO.ConexionBD - Conexión exitosa a la base de datos.
+2025-07-05 00:32:40 [main] INFO  DAO.ConexionBD - Conexión cerrada correctamente.
 ]]></system-out>
   </testcase>
-  <testcase name="testObtenerProductosMasVendidos" classname="com.proyecto.test.dao.DashboardDAOTest" time="0.017">
-    <system-out><![CDATA[2025-06-11 22:40:10 [main] INFO  DAO.ConexionBD - Conexión exitosa a la base de datos.
-2025-06-11 22:40:10 [main] INFO  DAO.ConexionBD - Conexión cerrada correctamente.
+  <testcase name="testObtenerProductosMasVendidos" classname="com.proyecto.test.dao.DashboardDAOTest" time="0.02">
+    <system-out><![CDATA[2025-07-05 00:32:40 [main] INFO  DAO.ConexionBD - Conexión exitosa a la base de datos.
+2025-07-05 00:32:40 [main] INFO  DAO.ConexionBD - Conexión cerrada correctamente.
 ]]></system-out>
   </testcase>
-  <testcase name="testObtenerResumenDashboard" classname="com.proyecto.test.dao.DashboardDAOTest" time="0.02">
-    <system-out><![CDATA[2025-06-11 22:40:10 [main] INFO  DAO.ConexionBD - Conexión exitosa a la base de datos.
-2025-06-11 22:40:10 [main] INFO  DAO.DashboardDAO - Inicio de obtención de resumen del dashboard
-2025-06-11 22:40:10 [main] INFO  DAO.DashboardDAO - Resumen obtenido: Modelo.DashboardResumen@1b1c538d
-2025-06-11 22:40:10 [main] INFO  DAO.ConexionBD - Conexión cerrada correctamente.
+  <testcase name="testObtenerResumenDashboard" classname="com.proyecto.test.dao.DashboardDAOTest" time="0.021">
+    <system-out><![CDATA[2025-07-05 00:32:40 [main] INFO  DAO.ConexionBD - Conexión exitosa a la base de datos.
+2025-07-05 00:32:40 [main] INFO  DAO.DashboardDAO - Inicio de obtención de resumen del dashboard
+2025-07-05 00:32:40 [main] INFO  DAO.DashboardDAO - Resumen obtenido: Modelo.DashboardResumen@1b1c538d
+2025-07-05 00:32:40 [main] INFO  DAO.ConexionBD - Conexión cerrada correctamente.
 ]]></system-out>
   </testcase>
   <testcase name="testObtenerUltimosIngresos" classname="com.proyecto.test.dao.DashboardDAOTest" time="0.016">
-    <system-out><![CDATA[2025-06-11 22:40:10 [main] INFO  DAO.ConexionBD - Conexión exitosa a la base de datos.
-2025-06-11 22:40:10 [main] INFO  DAO.ConexionBD - Conexión cerrada correctamente.
+    <system-out><![CDATA[2025-07-05 00:32:40 [main] INFO  DAO.ConexionBD - Conexión exitosa a la base de datos.
+2025-07-05 00:32:40 [main] INFO  DAO.ConexionBD - Conexión cerrada correctamente.
 ]]></system-out>
   </testcase>
 </testsuite>
