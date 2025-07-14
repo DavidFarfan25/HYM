@@ -1,6 +1,8 @@
 package Controlador;
 
+import DAO.MovimientoInventarioDAO;
 import DAO.ProductoDAO;
+import Modelo.MovimientoInventario;
 import Modelo.Producto;
 import com.google.common.base.Preconditions;
 
@@ -124,7 +126,6 @@ public class InventarioControlador {
         }
 
         Collections.shuffle(disponibles);
-
         int limite = Math.min(30, disponibles.size());
 
         for (int i = 0; i < limite; i++) {
@@ -139,9 +140,22 @@ public class InventarioControlador {
             }
 
             nuevoStock = Math.max(0, nuevoStock);
-
             producto.setStock(nuevoStock);
             productoDAO.actualizarProducto(producto);
+
+            // 👉 Registrar movimiento de salida
+            int cantidadReducida = stockActual - nuevoStock;
+            if (cantidadReducida > 0) {
+                MovimientoInventario movimiento = new MovimientoInventario(
+                    producto.getCodigo(),
+                    cantidadReducida,
+                    "salida",
+                    "Descuento por simulador automático"
+                );
+
+                MovimientoInventarioDAO movimientoDAO = new MovimientoInventarioDAO();
+                movimientoDAO.registrarMovimiento(movimiento);
+            }
 
             logger.info("Stock actualizado: {} = {}", producto.getNombre(), nuevoStock);
 
@@ -168,6 +182,7 @@ public class InventarioControlador {
     simuladorTimer.start();
     logger.info("Simulador de reducción de stock iniciado.");
 }
+
 
     
     public void detenerSimuladorDeStock() {

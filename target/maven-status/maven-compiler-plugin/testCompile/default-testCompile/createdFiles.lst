@@ -1,7 +1,6 @@
 com\proyecto\test\dao\ConexionBDTest.class
-Test\InventarioControladorTest.class
-com\proyecto\test\dao\UsuarioDAOTest.class
 com\proyecto\test\controlador\LoginControladorTest.class
 com\proyecto\test\dao\DashboardDAOTest.class
+Test\InventarioControladorTest.class
 Test\ProductoDAOTest.class
 com\proyecto\test\controlador\DashboardControladorTest.class

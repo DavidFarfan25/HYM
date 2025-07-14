@@ -700,9 +700,9 @@
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="lblContrasena" max="32767" attributes="0"/>
+                              <Component id="lblRol" max="32767" attributes="0"/>
                               <Component id="lblNombreUsuario" alignment="0" max="32767" attributes="0"/>
-                              <Component id="lblRol" alignment="0" max="32767" attributes="0"/>
+                              <Component id="lblContrasena" alignment="0" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="btnVerificar" min="-2" max="-2" attributes="0"/>
@@ -740,11 +740,11 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel29" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblRol" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblContrasena" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="lblContrasena" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblRol" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel28" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -834,7 +834,7 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtIDActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="java.awt.Label" name="lblContrasena">
+                <Component class="java.awt.Label" name="lblRol">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="cc" green="cc" red="ff" type="rgb"/>
@@ -854,7 +854,7 @@
                     </Property>
                   </Properties>
                 </Component>
-                <Component class="java.awt.Label" name="lblRol">
+                <Component class="java.awt.Label" name="lblContrasena">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="cc" green="cc" red="ff" type="rgb"/>

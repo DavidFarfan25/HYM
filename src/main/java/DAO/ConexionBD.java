@@ -14,14 +14,9 @@ public class ConexionBD {
     private static Connection conexion;
 
     private ConexionBD() {
-        // Constructor privado para prevenir instanciación
+        
     }
 
-    /**
-     * Obtiene una conexión activa a la base de datos.
-     * @return conexión activa
-     * @throws SQLException si hay error al conectar
-     */
     public static Connection obtenerConexion() throws SQLException {
         if (conexion == null || conexion.isClosed()) {
             try {
@@ -38,9 +33,6 @@ public class ConexionBD {
         return conexion;
     }
 
-    /**
-     * Cierra la conexión activa si está abierta.
-     */
     public static void cerrarConexion() {
         if (conexion != null) {
             try {

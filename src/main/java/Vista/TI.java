@@ -96,9 +96,9 @@ public class TI extends javax.swing.JFrame {
         jLabel30 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
         txtID = new javax.swing.JTextField();
-        lblContrasena = new java.awt.Label();
-        lblNombreUsuario = new java.awt.Label();
         lblRol = new java.awt.Label();
+        lblNombreUsuario = new java.awt.Label();
+        lblContrasena = new java.awt.Label();
         jPanel12 = new javax.swing.JPanel();
         jPanel13 = new javax.swing.JPanel();
         btnEstadoDeSistema = new javax.swing.JButton();
@@ -452,14 +452,14 @@ public class TI extends javax.swing.JFrame {
             }
         });
 
-        lblContrasena.setBackground(new java.awt.Color(255, 204, 204));
-        lblContrasena.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        lblRol.setBackground(new java.awt.Color(255, 204, 204));
+        lblRol.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
         lblNombreUsuario.setBackground(new java.awt.Color(255, 204, 204));
         lblNombreUsuario.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
-        lblRol.setBackground(new java.awt.Color(255, 204, 204));
-        lblRol.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        lblContrasena.setBackground(new java.awt.Color(255, 204, 204));
+        lblContrasena.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -477,9 +477,9 @@ public class TI extends javax.swing.JFrame {
                         .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblContrasena, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblNombreUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblRol, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblNombreUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblContrasena, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnVerificar)
@@ -509,10 +509,10 @@ public class TI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel29)
-                    .addComponent(lblRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel28))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -712,17 +712,17 @@ if (!id.isEmpty()) {
     Usuario usuario = ctrlUsuario.obtenerUsuarioPorId(id);
     if (usuario != null) {
         lblNombreUsuario.setText(usuario.getNombre()); // solo nombreUsuario
-        lblRol.setText(usuario.getRol());
         lblContrasena.setText(usuario.getContraseña());
+        lblRol.setText(usuario.getRol());
     } else {
         lblNombreUsuario.setText("Usuario no encontrado");
-        lblRol.setText("");
         lblContrasena.setText("");
+        lblRol.setText("");
     }
 } else {
     lblNombreUsuario.setText("Ingrese un ID válido");
-    lblRol.setText("");
     lblContrasena.setText("");
+    lblRol.setText("");
 }
 
     }//GEN-LAST:event_btnVerificarActionPerformed
@@ -738,8 +738,8 @@ if (!id.isEmpty()) {
 
     // 2. Verifica si los campos nombre, rol y contraseña están vacíos
     if (lblNombreUsuario.getText().trim().isEmpty() &&
-        lblRol.getText().trim().isEmpty() &&
-        lblContrasena.getText().trim().isEmpty()) {
+        lblContrasena.getText().trim().isEmpty() &&
+        lblRol.getText().trim().isEmpty()) {
         
         JOptionPane.showMessageDialog(this, "Verifique el ID antes de eliminar", "Verificación necesaria", JOptionPane.WARNING_MESSAGE);
         return;
@@ -758,8 +758,8 @@ if (!id.isEmpty()) {
             // Limpia los campos si todo salió bien
             txtID.setText("");
             lblNombreUsuario.setText("");
-            lblRol.setText("");
             lblContrasena.setText("");
+            lblRol.setText("");
         } else {
             JOptionPane.showMessageDialog(this, "No se pudo eliminar el usuario. Verifique que exista en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
         }

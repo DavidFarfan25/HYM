@@ -97,41 +97,47 @@ public class TIDAO {
     }
 
     public boolean eliminarUsuarioPorId(String id) {
-        String sql = "DELETE FROM Usuario WHERE usuario_id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, id);
-            int filasAfectadas = stmt.executeUpdate();
-            return filasAfectadas > 0;
-        } catch (SQLException e) {
-            logger.error("Error al eliminar usuario: {}", e.getMessage(), e);
-            return false;
-        }
+    String sql = "DELETE FROM Usuario WHERE usuario_id = ?";
+    try (Connection conexion = ConexionBD.obtenerConexion();
+         PreparedStatement stmt = conexion.prepareStatement(sql)) {
+
+        stmt.setString(1, id);
+        int filasAfectadas = stmt.executeUpdate();
+        return filasAfectadas > 0;
+
+    } catch (SQLException e) {
+        logger.error("Error al eliminar usuario: {}", e.getMessage(), e);
+        return false;
     }
+}
 
-    public int agregarUsuario(Usuario usuario) {
-        String sql = "INSERT INTO Usuario (nombreUsuario, contrasena, rol, estado, email, ultimo_acceso) " +
-                     "VALUES (?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            stmt.setString(1, usuario.getNombre());
-            stmt.setString(2, usuario.getContraseña());
-            stmt.setString(3, usuario.getRol());
-            stmt.setBoolean(4, usuario.isActivo());
-            stmt.setString(5, usuario.getCorreo());
-            stmt.setTimestamp(6, usuario.getUltimoAcceso());
+   public int agregarUsuario(Usuario usuario) {
+    String sql = "INSERT INTO Usuario (nombreUsuario, contrasena, rol, estado, email, ultimo_acceso) " +
+                 "VALUES (?, ?, ?, ?, ?, ?)";
 
-            int filasAfectadas = stmt.executeUpdate();
-            if (filasAfectadas > 0) {
-                try (ResultSet rs = stmt.getGeneratedKeys()) {
-                    if (rs.next()) {
-                        return rs.getInt(1);
-                    }
+    try(Connection conexion = ConexionBD.obtenerConexion();
+         PreparedStatement stmt = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {  // 🔁 corregido aquí
+
+        stmt.setString(1, usuario.getNombre());
+        stmt.setString(2, usuario.getContraseña());
+        stmt.setString(3, usuario.getRol());
+        stmt.setBoolean(4, usuario.isActivo());
+        stmt.setString(5, usuario.getCorreo());
+        stmt.setTimestamp(6, usuario.getUltimoAcceso());
+
+        int filasAfectadas = stmt.executeUpdate();
+        if (filasAfectadas > 0) {
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
                 }
             }
-        } catch (SQLException e) {
-            logger.error("Error al agregar usuario: {}", e.getMessage(), e);
         }
-        return -1;
+    } catch (SQLException e) {
+        logger.error("Error al agregar usuario: {}", e.getMessage(), e);
     }
+    return -1;
+}
 
     public boolean actualizarEstadoSistema(String nuevoEstado) {
         String sql = "UPDATE EstadoSistema SET nombre_estado = ? WHERE id = 1";

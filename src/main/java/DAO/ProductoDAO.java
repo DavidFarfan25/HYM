@@ -140,38 +140,74 @@ public class ProductoDAO {
     }
 
     
-    public boolean actualizarProducto(Producto producto) {
-        Preconditions.checkNotNull(producto, "El producto no puede ser null");
-        Preconditions.checkNotNull(producto.getCodigo(), "El código del producto no puede ser null");
+   public boolean actualizarProducto(Producto producto) {
+    Preconditions.checkNotNull(producto, "El producto no puede ser null");
+    Preconditions.checkNotNull(producto.getCodigo(), "El código del producto no puede ser null");
 
-        logger.info("Actualizando producto con código: '{}'", producto.getCodigo());
+    logger.info("Actualizando producto con código: '{}'", producto.getCodigo());
 
-            String sql = "UPDATE Producto SET " +
-             "nombre = ?, categoria = ?, talla = ?, precio = ?, stock = ?, color = ?, imagen = ?, " +
-             "visible = ?, ultima_actualizacion = GETDATE() " +
-             "WHERE codigo = ?";
+    String sqlUpdate = "UPDATE Producto SET " +
+            "nombre = ?, categoria = ?, talla = ?, precio = ?, stock = ?, color = ?, imagen = ?, " +
+            "visible = ?, ultima_actualizacion = GETDATE() " +
+            "WHERE codigo = ?";
 
-        try (Connection conn = ConexionBD.obtenerConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+    String sqlSelectStock = "SELECT stock FROM Producto WHERE codigo = ?";
+    String sqlInsertMovimiento = "INSERT INTO MovimientoInventario (codigo_producto, tipo_movimiento, cantidad, fecha_movimiento) VALUES (?, ?, ?, GETDATE())";
 
-            stmt.setString(1, producto.getNombre());
-            stmt.setString(2, producto.getCategoria());
-            stmt.setString(3, producto.getTalla());
-            stmt.setBigDecimal(4, producto.getPrecio());
-            stmt.setInt(5, producto.getStock());
-            stmt.setString(6, producto.getColor());
-            stmt.setString(7, producto.getImagen());
-            stmt.setInt(8, producto.isVisible() ? 1 : 0);
-            stmt.setString(9, producto.getCodigo());
+    try (Connection conn = ConexionBD.obtenerConexion()) {
+        conn.setAutoCommit(false);
 
-            return stmt.executeUpdate() > 0;
+        int stockAnterior = 0;
 
-        } catch (SQLException e) {
-            logger.error("Error al actualizar producto '{}': {}", producto.getCodigo(), e);
+        // Obtener stock anterior
+        try (PreparedStatement stmtSelect = conn.prepareStatement(sqlSelectStock)) {
+            stmtSelect.setString(1, producto.getCodigo());
+            try (ResultSet rs = stmtSelect.executeQuery()) {
+                if (rs.next()) {
+                    stockAnterior = rs.getInt("stock");
+                }
+            }
         }
 
-        return false;
+        int stockNuevo = producto.getStock();
+        int diferencia = stockNuevo - stockAnterior;
+
+        // Actualizar producto
+        try (PreparedStatement stmtUpdate = conn.prepareStatement(sqlUpdate)) {
+            stmtUpdate.setString(1, producto.getNombre());
+            stmtUpdate.setString(2, producto.getCategoria());
+            stmtUpdate.setString(3, producto.getTalla());
+            stmtUpdate.setBigDecimal(4, producto.getPrecio());
+            stmtUpdate.setInt(5, stockNuevo);
+            stmtUpdate.setString(6, producto.getColor());
+            stmtUpdate.setString(7, producto.getImagen());
+            stmtUpdate.setInt(8, producto.isVisible() ? 1 : 0);
+            stmtUpdate.setString(9, producto.getCodigo());
+            stmtUpdate.executeUpdate();
+        }
+
+        // Insertar movimiento solo si hay cambio
+        if (diferencia != 0) {
+            String tipo = (diferencia > 0) ? "entrada" : "salida";
+
+            try (PreparedStatement stmtMov = conn.prepareStatement(sqlInsertMovimiento)) {
+                stmtMov.setString(1, producto.getCodigo());
+                stmtMov.setString(2, tipo);
+                stmtMov.setInt(3, Math.abs(diferencia)); // La cantidad siempre positiva
+                stmtMov.executeUpdate();
+            }
+        }
+
+        conn.commit();
+        return true;
+
+    } catch (SQLException e) {
+        logger.error("Error al actualizar producto '{}': {}", producto.getCodigo(), e);
+        e.printStackTrace();
     }
+
+    return false;
+}
 
   
     public boolean registrarProducto(Producto producto) {

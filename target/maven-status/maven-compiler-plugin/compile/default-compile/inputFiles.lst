@@ -1,4 +1,3 @@
-C:\Users\Dave\Documents\NetBeansProjects\HYM\src\main\java\Controlador\ReporteControlador.java
 C:\Users\Dave\Documents\NetBeansProjects\HYM\src\main\java\Controlador\LoginControlador.java
 C:\Users\Dave\Documents\NetBeansProjects\HYM\src\main\java\Modelo\Producto.java
 C:\Users\Dave\Documents\NetBeansProjects\HYM\src\main\java\DAO\TIDAO.java
@@ -6,11 +5,13 @@ C:\Users\Dave\Documents\NetBeansProjects\HYM\src\main\java\Vista\login.java
 C:\Users\Dave\Documents\NetBeansProjects\HYM\src\main\java\Modelo\Usuario.java
 C:\Users\Dave\Documents\NetBeansProjects\HYM\src\main\java\Controlador\InventarioControlador.java
 C:\Users\Dave\Documents\NetBeansProjects\HYM\src\main\java\DAO\ConexionBD.java
-C:\Users\Dave\Documents\NetBeansProjects\HYM\src\main\java\Modelo\Reporte.java
 C:\Users\Dave\Documents\NetBeansProjects\HYM\src\main\java\Vista\TI.java
 C:\Users\Dave\Documents\NetBeansProjects\HYM\src\main\java\Controlador\UsuarioControlador.java
 C:\Users\Dave\Documents\NetBeansProjects\HYM\src\main\java\Main\App.java
 C:\Users\Dave\Documents\NetBeansProjects\HYM\src\main\java\Vista\inventario.java
+C:\Users\Dave\Documents\NetBeansProjects\HYM\src\main\java\Reporte\ReporteExportador.java
+C:\Users\Dave\Documents\NetBeansProjects\HYM\src\main\java\DAO\MovimientoInventarioDAO.java
+C:\Users\Dave\Documents\NetBeansProjects\HYM\src\main\java\Modelo\MovimientoInventario.java
 C:\Users\Dave\Documents\NetBeansProjects\HYM\src\main\java\DAO\ProductoDAO.java
 C:\Users\Dave\Documents\NetBeansProjects\HYM\src\main\java\DAO\DashboardDAO.java
 C:\Users\Dave\Documents\NetBeansProjects\HYM\src\main\java\DAO\ReporteDAO.java
